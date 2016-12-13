@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/font.css' %}">
+	</head>
+	<body>
+		<div class="container" style="padding-left: 10%;padding-right: 10%">
+			<br>
+			<h3 class="titillium" style="text-align: center;">Sign in to Momentum Student Directory</h3>
+			<br>
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4 well" id="signinbox">
+					<form action="" method="POST">
+						{% csrf_token %}
+						<p class="muli">Username</p>
+						<input class="form-control" type="text" name="username" value=""><br>
+						<p class="muli">Password</p>
+						<input class="form-control" type="password" name="password" value=""><br>
+						<input class="btn btn-block btn-success" type="submit" value="Sign in">
+					</form>
+				</div>
+				<div class="col-sm-4"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4 well" id="accbox">
+					Don't have an account? <br><a href="/">Sign Up</a>
+				</div>
+				<div class="col-sm-4"></div>
+			</div>
+		</div>
+
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+	</body>
+</html>
+

@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/font.css' %}">
+	</head>
+	<body>
+		<!--Navigation Bar Header Begins-->
+		<header class="row-fluid" id="nav">
+			<div class="container">
+				<div class="row">
+					<ul class="pull-right" id="main_menu">
+                        <li class="muli"><a href="login/">Sign in</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<!--Navigation Bar Header Ends-->
+
+
+        <div class="row-fluid">
+            <div class="col-sm-9" style="padding:0">
+                <div class="row-fluid" id="intropane">
+                    <br><br><br><br><br>
+                    <h1 class="titillium big" >Momentum Student Directory</h1>
+                    <h5 class="muli" style="margin-left:0.5%">Student Data Management Portal</h5>
+                    <br><br><br>
+                </div>
+                <div class="row-fluid" id="contentpane">
+                    <h3 class="titillium" >Available Features</h3>
+                    <ul class="muli">
+                        <li>Add a new User</li>
+                        <li>Add a new Student</li>
+                        <li>Update Student Details</li>
+                        <li>Delete a Student</li>
+                    </ul><br><br>
+                </div>
+                
+            </div>
+            <div class="col-sm-3 border-left" id="registerpane">
+                <br><br><br><br><br>
+                <form action="login/" method="POST">
+                    {% csrf_token %}
+                    <p class="muli">Username</p>
+                    <input class="form-control" type="text" name="username" value=""><br>
+                    <p class="muli">Password</p>
+                    <input class="form-control" type="password" name="password" value=""><br>
+                    <input class="btn btn-block btn-success" type="submit" value="Sign in">
+                </form>
+                <br><br><br><br><br>
+            </div>
+        </div>
+        <div id="footer" class="muli">By Pranshu Gupta</div>
+        <!--<a href="login/">login</a>-->
+
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+	</body>
+</html>

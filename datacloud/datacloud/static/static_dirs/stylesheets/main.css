@@ -1,0 +1,82 @@
+/*Navigation Bar styles/////////////////////////////////////////////////////////////////////////*/
+body {
+  overflow-x: hidden;
+}
+
+#nav {
+  background-color: #fff;
+  padding: 15px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  min-height: 0;
+  z-index: 2000;
+    -webkit-transition: color 0.5s;
+    transition: 0.5s;  
+   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+#nav a {
+  vertical-align: center;
+  text-align: center;
+  color: rgb(85,172,238);
+}
+#nav a:hover {
+  color: rgba(0,7,13, 0.9);
+}
+#nav ul {
+    list-style-type: none;
+    margin: 0;
+}
+#nav li {
+    display: inline;
+    padding: 10px;
+    -webkit-transition: color 0.5s;
+    transition: 0.5s;   
+}
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/*General row styles*/
+.row,
+.row-fluid {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+#br1 {
+  background-color: rgb(220,220,220);
+  font-size: 1px;
+}
+
+/*Custom Font Sizes*/
+.big {
+  font-size: 400%;
+}
+.small {
+  font-size: 10px;
+}
+
+/*Custom Border Styles*/
+.border-left {
+  border-left: solid;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: rgb(220,220,220);
+}
+.border-right {
+  border-right: solid;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: rgb(220,220,220);
+}
+.border {
+  border: solid;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: rgb(220,220,220);
+}
+
+.btn:hover {
+  
+}
+
+

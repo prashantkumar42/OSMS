@@ -1,0 +1,95 @@
+#nav {
+  background-color: rgb(210,71,38);
+  color: #fff;
+  box-shadow: none;
+}
+#nav a {
+  color: #fff;
+}
+#nav a:hover {
+  color: #fff;
+}
+
+#panel1 {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(35,35,30);
+    color: #fff;
+    overflow-y: auto;
+    height: 100vh;
+}
+#panel2 {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(3, 29, 52);
+    color: #fff;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+#panel3 {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+#plots {
+  padding: 3%
+}
+
+#stats {
+  padding: 2%;
+  text-align: right;
+}
+
+.batch {
+  background-color:black;
+  color:#fff;
+  padding:4%;
+  margin:0;
+}
+
+.batch:hover {
+  background-color: rgba(102,102,102,0.5);
+}
+
+.student {
+  background-color:rgb(1, 13, 22);
+  color:#fff;
+  padding:2%;
+  padding-left: 4%;
+  padding-right: 4%;
+  margin:0;
+}
+
+.student:hover {
+  background-color: rgba(9, 78, 140, 0.5);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+#hover:hover {
+  cursor: pointer;
+}
+
+#addStudent {
+  display: none;
+  padding: 2%
+}
+
+#studentDetails {
+  padding: 1%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.btn-success {
+  border-radius: 0;
+}
+
+.btn-danger {
+  border-radius: 0;
+}
