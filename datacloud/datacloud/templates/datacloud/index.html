@@ -14,7 +14,7 @@
                 <div class="row-fluid" id="intropane">
                     <br><br>
                     <h1 class="titillium big">School Management System</h1>
-                    <h5 class="muli" style="margin-left:0.5%">Efficiently manage Student List, Fee Structure and Student Grades</h5>
+                    <h5 class="muli" style="margin-left:0.5%">Efficiently manage Student List, Fee Payment List and Student Grades</h5>
                     <br><br><br>
                 </div>
                 <div class="row-fluid" id="contentpane">
@@ -23,6 +23,7 @@
                 
             </div>
             <div class="col-sm-3 border-left" id="registerpane">
+                <br><h4 class="titillium pull-right">Administrator Login</h4>
                 <br><br>
                 <form action="login/" method="POST">
                     {% csrf_token %}
@@ -34,7 +35,7 @@
             </div>
         </div>
         <!--<a href="login/">login</a>-->
-
+        <script src="{% static 'scripts/jquery.js' %}" ></script>
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
 	</body>
 </html>
