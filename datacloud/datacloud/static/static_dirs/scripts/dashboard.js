@@ -10,7 +10,7 @@ function viewDetails(std) {
     document.getElementById("stdAddress").innerHTML = std.address;
 
     document.getElementById("student"+std.id).style = "background-color:rgb(9, 78, 140)";
-    if (highlightedSTD != null) {
+    if (highlightedSTD != null && highlightedSTD != std.id) {
         document.getElementById("student" + highlightedSTD).style = "";
     }
     highlightedSTD = std.id;
