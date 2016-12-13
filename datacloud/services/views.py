@@ -109,3 +109,4 @@ def stdupdate(request):
         student.save()
 
     return redirect('../dashboard/?batch=' + str(batchID))
+

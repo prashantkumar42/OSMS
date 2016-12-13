@@ -15,3 +15,9 @@ class Student(models.Model):
 	def __str__(self):
 		text = self.name + ", " + self.father + ", " + self.mother + ", " + self.batch + ", " + self.contact + ", " + str(self.age) + ", " + self.gender + ", " + self.address
 		return text
+
+class Batch(models.Model):
+	name = models.CharField(max_length=255)
+
+	def __str__(self):
+		return self.name

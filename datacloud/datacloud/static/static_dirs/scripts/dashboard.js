@@ -15,7 +15,7 @@ function viewDetails(std) {
     }
     highlightedSTD = std.id;
     // create the update and delete buttons
-    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE</button> <a href='http://127.0.0.1:8000/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli pull-right btn btn-danger'>DELETE</button></a>"
+    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE</button> <a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli pull-right btn btn-danger'>DELETE</button></a>"
     document.getElementById("udbuttons").innerHTML = btnHTML;
     // fill up the update form
     document.getElementById("uid").value = std.id;
@@ -57,7 +57,7 @@ function stdupdate(stdID) {
 function getStudents(batchID) {
     console.log(batchID)
     batches = ["Learner", "Focus", "Target"];
-    endpoint = "http://127.0.0.1:8000/services/api?batch=" + batches[batchID-1];
+    endpoint = "/services/api?batch=" + batches[batchID-1];
 
     document.getElementById("batch"+batchID).style = "background-color:#666";
     if (highlightedBatch != null) {
