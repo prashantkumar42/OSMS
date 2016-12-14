@@ -58,7 +58,7 @@ function getStudents(batchID) {
     console.log(batchID)
     batches = ["Learner", "Focus", "Target"];
     endpoint = "/services/api?batch=" + batches[batchID-1];
-
+    document.getElementById("stdlistname").innerText = "STUDENTS IN " + (batches[batchID-1]).toUpperCase();
     document.getElementById("batch"+batchID).style = "background-color:#666";
     if (highlightedBatch != null) {
         document.getElementById("batch" + highlightedBatch).style = "";

@@ -93,3 +93,15 @@ a:hover {
 .btn-danger {
   border-radius: 0;
 }
+
+#search, #fees {
+  padding:4%;
+  margin:0;
+}
+#search:hover {
+  background-color: darkslateblue;
+}
+
+#fees:hover {
+  background-color: green;
+}
