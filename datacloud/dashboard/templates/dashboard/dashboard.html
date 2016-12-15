@@ -50,10 +50,11 @@
                 <div class="row student" style="background-color: rgb(3, 29, 52)">
                     <i id="hover" data-toggle="modal" data-target="#addStudent">Add a new Student</i>
                 </div>
-                <div id="studentList">
-                    <div class="row" id="student">
-                        No Students
-                    </div>                    
+                <div id="studentList">                   
+                </div>
+                <div class="row student" style="padding-top:2.5%;background-color:rgb(3, 29, 52)">
+                    <button class="btn btn-primary">UPDATE BATCH</button> 
+                    <span data-toggle="modal" data-target="#deleteBatch" class="pull-right glyphicon glyphicon-trash" id="delete"></span>
                 </div>
             </div>
             <div class="col-sm-7" id="panel3">
@@ -109,6 +110,34 @@
                             </div>
                             <button type="submit" class="muli btn btn-primary">Add Batch</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" id="deleteBatch">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="muli modal-body">
+                        <p>Deleting a batch will also delete all the students enrolled in that batch!</p><br>
+                        <button type="submit" class="muli btn btn-danger" id="deleteBatchLabel">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" id="deleteStudent">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="muli modal-body">
+                        <p>This will delete all the data associated with the student - <span id="DelstdName"></span> !</p><br>
+                        <div id="deleteStudentButton"></div>
                     </div>
                 </div>
             </div>

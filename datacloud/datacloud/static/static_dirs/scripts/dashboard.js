@@ -15,8 +15,11 @@ function viewDetails(std) {
     }
     highlightedSTD = std.id;
     // create the update and delete buttons
-    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli pull-right btn btn-danger'>DEREGISTER</button></a>"
+    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button><button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
+    btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
+    document.getElementById("deleteStudentButton").innerHTML = btnDelHTML;
     document.getElementById("udbuttons").innerHTML = btnHTML;
+    document.getElementById("DelstdName").innerHTML = std.name;
     // fill up the update form
     document.getElementById("uid").value = std.id;
     document.getElementById("uname").value = std.name;
@@ -68,6 +71,8 @@ function getStudents(batchName) {
             option.selected = false;
         }
     }
+
+    document.getElementById("deleteBatchLabel").innerText = "Yes, I want to delete " + batchName + " batch!"
 
     // get the data 
     var data = null;
