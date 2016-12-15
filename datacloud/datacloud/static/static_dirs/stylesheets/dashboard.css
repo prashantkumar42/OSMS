@@ -54,6 +54,11 @@
   background-color: rgba(102,102,102,0.5);
 }
 
+#studentList {
+  height: 83vh;
+  overflow-y: auto;  
+}
+
 #batchListCol {
   height: 49vh;
   overflow-y: auto;
@@ -106,4 +111,13 @@ a:hover {
 
 #fees:hover, #search:hover, #grades:hover, #courses:hover, #surveys:hover, #workforce:hover, #about:hover {
   background-color: green;
+}
+
+#delete {
+  padding: 3%;
+  font-size: 120%;
+}
+#delete:hover {
+  color: orangered;
+  cursor: pointer;
 }
