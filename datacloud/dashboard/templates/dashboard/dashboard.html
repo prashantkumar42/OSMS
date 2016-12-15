@@ -19,15 +19,7 @@
                     <i id="hover" data-toggle="modal" data-target="#addBatch">Add a new Batch</i>
                 </div>                
                 <div id="batchListCol">
-                    <div class="row batch" id="Learner" onclick="getStudents(1)">
-                        Learner
-                    </div>
-                    <div class="row batch" id="Focus" onclick="getStudents(2)">
-                        Focus
-                    </div>
-                    <div class="row batch" id="Target" onclick="getStudents(3)">
-                        Target
-                    </div>
+
                 </div>
                 <div class="row" style="margin-top:3%" id="search">
                     Advanced Search
@@ -188,10 +180,7 @@
                                 <label class="sr-only" for="batch">Batch</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">Batch</div>
-                                    <select class="form-control" name="batch">
-                                        <option>Learner</option>
-                                        <option>Focus</option>
-                                        <option>Target</option>
+                                    <select class="form-control" name="batch" id="ubatch1">
                                     </select>
                                 </div>
                             </div>
@@ -270,9 +259,6 @@
                                 <div class="input-group">
                                     <div class="input-group-addon">Batch</div>
                                     <select class="form-control" name="batch" id="ubatch">
-                                        <option>Learner</option>
-                                        <option>Focus</option>
-                                        <option>Target</option>
                                     </select>
                                 </div>
                             </div>

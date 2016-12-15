@@ -48,13 +48,8 @@ function viewDetails(std) {
 
 }
 
-
-function stdupdate(stdID) {
-
-}
-
-
 function getStudents(batchName) {
+    //console.log(batchName)
     endpoint = "/services/api?batch=" + batchName;
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
     document.getElementById(batchName).style = "background-color:#666";
@@ -63,6 +58,16 @@ function getStudents(batchName) {
     }
     highlightedBatch = batchName;
     highlightedSTD = null;
+
+    var batchDropdown = document.getElementById("ubatch1");
+    for (var i = 0; i < batchDropdown.options.length; i++) {
+        var option = batchDropdown.options[i];
+        if (option.value == batchName) {
+            option.selected = true;
+        } else {
+            option.selected = false;
+        }
+    }
 
     // get the data 
     var data = null;
@@ -73,22 +78,61 @@ function getStudents(batchName) {
             //console.log(this.responseText);
             students = (JSON.parse(this.responseText)).response;
             //console.log(students);
-            html = "";
-            for (i = 0; i < students.length; i++) {
-                html += "<div class='row student' id='student" + students[i].id + "' onclick='viewDetails(" + JSON.stringify(students[i]) + ")'>" + students[i].name + "</div>"; 
-                //console.log(students[i].name);
+            if (students.length > 0) {
+                $("#studentDetails").show()
+                html = "";
+                for (i = 0; i < students.length; i++) {
+                    html += "<div class='row student' id='student" + students[i].id + "' onclick='viewDetails(" + JSON.stringify(students[i]) + ")'>" + students[i].name + "</div>"; 
+                    //console.log(students[i].name);
+                }
+                //console.log(html);
+                document.getElementById("studentList").innerHTML = html;
+                viewDetails(students[0]);
+            } else {
+                document.getElementById("studentList").innerHTML = "";
+                $("#studentDetails").hide();
             }
-            //console.log(html);
-            document.getElementById("studentList").innerHTML = html;
-            viewDetails(students[0]);
         }
     });
     xhr.open("GET", endpoint);
     xhr.send(data);               
 }
 
-if (sentBatch != null) {
-    getStudents(sentBatch); 
-} else {
-    getStudents("Learner");
+function getBatches() {
+    endpoint = "/services/getBatchNames"
+    // get the data 
+    var data = null;
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            console.log(this.responseText);
+            batches = (JSON.parse(this.responseText)).response;
+            //console.log(students);
+            html = ""; ddhtml = "";
+            for (i = 0; i < batches.length; i++) {
+                html += "<div class='row batch' id='" + batches[i] + "' onclick='getStudents(\"" + batches[i] + "\")'>" + batches[i] + "</div>"; 
+                ddhtml += "<option>" + batches[i] + "</option>"
+                //console.log(students[i].name);
+            }
+            //console.log(html);
+            document.getElementById("batchListCol").innerHTML = html;
+            document.getElementById("ubatch1").innerHTML = ddhtml;
+            document.getElementById("ubatch").innerHTML = ddhtml;
+            console.log("sent batch is " + sentBatch)
+            if (sentBatch !=  null && sentBatch != "") {
+                console.log("doing getStudents for " + sentBatch);
+                getStudents(sentBatch); 
+            } else {
+                console.log("doing getStudents for else");
+                if (batches.length > 0) {
+                    getStudents(batches[0]);
+                }
+            }
+        }
+    });
+    xhr.open("GET", endpoint);
+    xhr.send(data);    
 }
+
+getBatches();

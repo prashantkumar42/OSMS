@@ -6,7 +6,11 @@ from django.contrib.auth import logout
 def index(request):
     if request.user.is_authenticated:
         rbatch = request.GET.get('batch')
+        print(rbatch)
+        if rbatch == None:
+            rbatch = ""
         template = loader.get_template('dashboard/dashboard.html')
+        print(rbatch)
         context = {
             'username': request.user.username,
             'batch': rbatch

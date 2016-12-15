@@ -24,15 +24,10 @@ def api(request):
 def stddelete(request):
     sid = request.GET.get('sid')
     rbatch = request.GET.get('bid')
-    batchID = 1
-    if rbatch == "Focus":
-        batchID = 2
-    elif rbatch == "Target":
-        batchID = 3
     if request.user.is_authenticated:
         # Delete the student entry with id = sid
         models.Student.objects.filter(id=sid).delete()
-    return redirect('../dashboard/?batch=' + str(batchID))
+    return redirect('../dashboard/?batch=' + rbatch)
 
 def getBatchNames(request):
     if request.user.is_authenticated:
