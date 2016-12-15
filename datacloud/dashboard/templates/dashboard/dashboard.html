@@ -12,26 +12,43 @@
 	<body>       
         <div class="row-fluid">            
             <div class="col-sm-2 muli" id="panel1">
-                <div class="row batch" style="background-color: rgb(35,35,30)">
+                <div class="row batch" style="background-color: black">
                     BATCHES
                 </div>
-                <div class="row batch" style="background-color: rgb(35,35,30)">
+                <div class="row batch" style="background-color: black">
                     <i id="hover" data-toggle="modal" data-target="#addBatch">Add a new Batch</i>
-                </div>
-                <div class="row batch" id="batch1" onclick="getStudents(1)">
-                    Learner
-                </div>
-                <div class="row batch" id="batch2" onclick="getStudents(2)">
-                    Focus
-                </div>
-                <div class="row batch" id="batch3" onclick="getStudents(3)">
-                    Target
+                </div>                
+                <div id="batchListCol">
+                    <div class="row batch" id="batch1" onclick="getStudents(1)">
+                        Learner
+                    </div>
+                    <div class="row batch" id="batch2" onclick="getStudents(2)">
+                        Focus
+                    </div>
+                    <div class="row batch" id="batch3" onclick="getStudents(3)">
+                        Target
+                    </div>
                 </div>
                 <div class="row" id="search">
                     Advanced Search
                 </div>
+                <div class="row" id="courses">
+                    Course Management
+                </div>
+                <div class="row" id="grades">
+                    Grades Management
+                </div>
                 <div class="row" id="fees">
                     Fee Management
+                </div>
+                <div class="row" id="workforce">
+                    Workforce
+                </div>
+                <div class="row" id="surveys">
+                    Enquiries &amp; Surveys 
+                </div>
+                <div class="row" id="about">
+                    About
                 </div>
             </div>
             <div class="col-sm-3 muli" id="panel2">
@@ -126,7 +143,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button type="submit" class="titillium btn btn-primary">Add Student</button>
+                                    <button type="submit" class="muli btn btn-primary">Add Student</button>
                                 </form>
                             </div>
                         </div>

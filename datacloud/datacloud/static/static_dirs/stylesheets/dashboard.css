@@ -54,6 +54,11 @@
   background-color: rgba(102,102,102,0.5);
 }
 
+#batchListCol {
+  height: 50vh;
+  overflow-y: auto;
+}
+
 .student {
   background-color:rgb(1, 13, 22);
   color:#fff;
@@ -86,22 +91,19 @@ a:hover {
   padding-right: 3%;
 }
 
-.btn-success {
+.btn-success, .input-group-addon, .btn-danger {
   border-radius: 0;
 }
 
-.btn-danger {
+.modal, .fade, .modal-dialog, .modal-content, .modal-header, .modal-body {
   border-radius: 0;
 }
 
-#search, #fees {
+#search, #fees, #grades, #courses, #surveys, #workforce, #about {
   padding:4%;
   margin:0;
 }
-#search:hover {
-  background-color: darkslateblue;
-}
 
-#fees:hover {
+#fees:hover, #search:hover, #grades:hover, #courses:hover, #surveys:hover, #workforce:hover, #about:hover {
   background-color: green;
 }
