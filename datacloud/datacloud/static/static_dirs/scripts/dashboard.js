@@ -54,16 +54,14 @@ function stdupdate(stdID) {
 }
 
 
-function getStudents(batchID) {
-    console.log(batchID)
-    batches = ["Learner", "Focus", "Target"];
-    endpoint = "/services/api?batch=" + batches[batchID-1];
-    document.getElementById("stdlistname").innerText = "STUDENTS IN " + (batches[batchID-1]).toUpperCase();
-    document.getElementById("batch"+batchID).style = "background-color:#666";
+function getStudents(batchName) {
+    endpoint = "/services/api?batch=" + batchName;
+    document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
+    document.getElementById(batchName).style = "background-color:#666";
     if (highlightedBatch != null) {
-        document.getElementById("batch" + highlightedBatch).style = "";
+        document.getElementById(highlightedBatch).style = "";
     }
-    highlightedBatch = batchID;
+    highlightedBatch = batchName;
     highlightedSTD = null;
 
     // get the data 
@@ -92,5 +90,5 @@ function getStudents(batchID) {
 if (sentBatch != null) {
     getStudents(sentBatch); 
 } else {
-    getStudents(1);
+    getStudents("Learner");
 }

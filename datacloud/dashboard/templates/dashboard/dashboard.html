@@ -19,17 +19,17 @@
                     <i id="hover" data-toggle="modal" data-target="#addBatch">Add a new Batch</i>
                 </div>                
                 <div id="batchListCol">
-                    <div class="row batch" id="batch1" onclick="getStudents(1)">
+                    <div class="row batch" id="Learner" onclick="getStudents(1)">
                         Learner
                     </div>
-                    <div class="row batch" id="batch2" onclick="getStudents(2)">
+                    <div class="row batch" id="Focus" onclick="getStudents(2)">
                         Focus
                     </div>
-                    <div class="row batch" id="batch3" onclick="getStudents(3)">
+                    <div class="row batch" id="Target" onclick="getStudents(3)">
                         Target
                     </div>
                 </div>
-                <div class="row" id="search">
+                <div class="row" style="margin-top:3%" id="search">
                     Advanced Search
                 </div>
                 <div class="row" id="courses">
@@ -69,86 +69,6 @@
                     {{username}} <a href="logout/">sign out</a>
                 </div>
                 <div class="row" id="br1"></div>
-                <div class="modal fade" role="dialog" id="addStudent">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="muli modal-title">Add a new Student</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form action="../services/collect" method="POST">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label class="sr-only" for="name">Name</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Name</div>
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Student Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="father">Father</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Father</div>
-                                            <input type="text" class="form-control" name="father" id="father" placeholder="Enter Father's Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="mother">Mother</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Mother</div>
-                                            <input type="text" class="form-control" name="mother" id="mother" placeholder="Enter Mother's Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="gender">Gender</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Gender</div>
-                                            <select class="form-control" name="gender">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="age">Age</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Age</div>
-                                            <input type="number" class="form-control" name="age" id="age" placeholder="Enter Age">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="address">Address</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Address</div>
-                                            <textarea type="textarea" class="form-control" name="address" id="address" placeholder="Enter Address"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="contact">Contact</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Contact</div>
-                                            <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter Mobile Number">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="batch">Batch</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Batch</div>
-                                            <select class="form-control" name="batch">
-                                                <option>Learner</option>
-                                                <option>Focus</option>
-                                                <option>Target</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="muli btn btn-primary">Add Student</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row muli" id="studentDetails">
                     <h1 class="big" id="stdName"></h1>
                     <br><br>
@@ -175,6 +95,109 @@
                     <br>
                     <div id="udbuttons"></div>
 
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" id="addBatch">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title">Add a new Batch</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="../services/addBatch" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="sr-only" for="name">Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Name</div>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Batch Name">
+                                </div>
+                            </div>
+                            <button type="submit" class="muli btn btn-primary">Add Batch</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" id="addStudent">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title">Add a new Student</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="../services/collect" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="sr-only" for="name">Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Name</div>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Student Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="father">Father</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Father</div>
+                                    <input type="text" class="form-control" name="father" id="father" placeholder="Enter Father's Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="mother">Mother</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Mother</div>
+                                    <input type="text" class="form-control" name="mother" id="mother" placeholder="Enter Mother's Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="gender">Gender</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Gender</div>
+                                    <select class="form-control" name="gender">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="age">Age</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Age</div>
+                                    <input type="number" class="form-control" name="age" id="age" placeholder="Enter Age">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="address">Address</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Address</div>
+                                    <textarea type="textarea" class="form-control" name="address" id="address" placeholder="Enter Address"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="contact">Contact</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Contact</div>
+                                    <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter Mobile Number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="batch">Batch</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Batch</div>
+                                    <select class="form-control" name="batch">
+                                        <option>Learner</option>
+                                        <option>Focus</option>
+                                        <option>Target</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="muli btn btn-primary">Add Student</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,7 +286,7 @@
             console.log("{{username}}");
             var highlightedSTD;
             var highlightedBatch;
-            var sentBatch = {{batch}};
+            var sentBatch = "{{batch}}";
         </script>
         <script src="{% static 'scripts/jquery.js' %}" ></script>
         <script src="{% static 'scripts/dashboard.js' %}" ></script>

@@ -5,6 +5,7 @@ from . import models
 import json
 
 # Create your views here.
+
 def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
@@ -33,21 +34,41 @@ def stddelete(request):
         models.Student.objects.filter(id=sid).delete()
     return redirect('../dashboard/?batch=' + str(batchID))
 
+def getBatchNames(request):
+    if request.user.is_authenticated:
+        array = models.Batch.objects.all()
+        batches = []
+        for a in array:
+            batches.insert(len(batches), a.name)
+        batches.sort()
+        return JsonResponse({'response':batches})
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def addBatch(request):
+    rname = request.POST["name"]
+    validated = False
+    if rname:
+        validated = True    
+    
+    if validated and request.user.is_authenticated:
+        batch = models.Batch(
+            name = rname
+        )
+        batch.save()
+    
+    return redirect('../dashboard/?batch=' + rname)
+
 def collect(request):
     rname = request.POST["name"]
     rfather = request.POST["father"]
     rmother = request.POST["mother"]
     rbatch = request.POST["batch"]
-    batchID = 1
-    if rbatch == "Focus":
-        batchID = 2
-    elif rbatch == "Target":
-        batchID = 3
     rage = request.POST["age"]
     rgender = request.POST["gender"]
     raddress = request.POST["address"]
     rcontact = request.POST["contact"]
-    print(rname)
+
     # Validate the data recieved
     validated = False
     if rname and rfather and rmother and rbatch and rage and rgender and raddress and rcontact:
@@ -67,7 +88,7 @@ def collect(request):
         )
         student.save()
 
-    return redirect('../dashboard/?batch=' + str(batchID))
+    return redirect('../dashboard/?batch=' + rbatch)
 
 def stdupdate(request):
     rid = request.POST["id"]
@@ -75,16 +96,11 @@ def stdupdate(request):
     rfather = request.POST["father"]
     rmother = request.POST["mother"]
     rbatch = request.POST["batch"]
-    batchID = 1
-    if rbatch == "Focus":
-        batchID = 2
-    elif rbatch == "Target":
-        batchID = 3
     rage = request.POST["age"]
     rgender = request.POST["gender"]
     raddress = request.POST["address"]
     rcontact = request.POST["contact"]
-    print(rname)
+
     # Validate the data recieved
     validated = False
     if rname and rfather and rmother and rbatch and rage and rgender and raddress and rcontact:
@@ -108,5 +124,5 @@ def stdupdate(request):
         )
         student.save()
 
-    return redirect('../dashboard/?batch=' + str(batchID))
+    return redirect('../dashboard/?batch=' + rbatch)
 
