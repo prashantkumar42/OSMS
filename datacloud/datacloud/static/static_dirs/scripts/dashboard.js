@@ -72,7 +72,7 @@ function getStudents(batchName) {
         }
     }
 
-    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
+    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch?batch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
     document.getElementById("bname").value = batchName;
     document.getElementById("oname").value = batchName;
 
@@ -132,8 +132,11 @@ function getBatches() {
                 getStudents(sentBatch); 
             } else {
                 if (batches.length > 0) {
+                    $("#studentPane").show();
                     console.log("doing getStudents in else for " + batches[0].name);
                     getStudents(batches[0].name);
+                } else {
+                    $("#studentPane").hide();
                 }
             }
         }
@@ -142,4 +145,5 @@ function getBatches() {
     xhr.send(data);    
 }
 
+$("#studentDetails").hide();
 getBatches();
