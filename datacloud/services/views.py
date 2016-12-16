@@ -15,7 +15,11 @@ def api(request):
         array = models.Student.objects.filter(batch=batch.id)
         students = []
         for a in array:
-            student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age}
+            fee = models.Fee.objects.filter(studentId=a.id)
+            if len(fee):
+                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+            else:
+                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -29,6 +33,7 @@ def stddelete(request):
     if request.user.is_authenticated:
         # Delete the student entry with id = sid
         models.Student.objects.filter(id=sid).delete()
+        models.Fee.objects.filter(studentId=sid).delete()
     return redirect('../dashboard/?batch=' + rbatch)
 
 def getBatchNames(request):
@@ -77,6 +82,9 @@ def deleteBatch(request):
     if request.user.is_authenticated:
         bid = (models.Batch.objects.get(name=bName)).id
         models.Batch.objects.filter(name=bName).delete()
+        students = models.Student.objects.filter(batch=bid)
+        for std in students:
+            models.Fee.objects.filter(studentId=std.id).delete()
         models.Student.objects.filter(batch=bid).delete()
     return redirect('../dashboard/')
 
@@ -144,3 +152,33 @@ def stdupdate(request):
 
     return redirect('../dashboard/?batch=' + rbatch)
 
+def studentFee(request):
+    rid = request.POST["sid"]
+    bid = request.POST["batch"]
+    rinst = request.POST["installments"]
+    ramnt = request.POST["amount"]
+    rpaid = request.POST["paid"]
+    rbatch = request.POST["batch"]
+
+    # Validate the data recieved
+    validated = False
+    if rid and rinst and ramnt and rpaid and rbatch:
+        validated = True 
+
+    if validated and request.user.is_authenticated:
+        fee = models.Fee.objects.filter(studentId=rid)
+        if len(fee): 
+            fee[0].installments = rinst
+            fee[0].amountPerInst = ramnt
+            fee[0].paidInst = rpaid
+            fee[0].save()
+        else:       
+            fee = models.Fee(
+                studentId = rid,
+                installments = rinst,
+                amountPerInst = ramnt,
+                paidInst = rpaid
+            )
+            fee.save()
+
+    return redirect('../dashboard/?batch=' + rbatch)

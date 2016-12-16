@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'getBatchNames$', views.getBatchNames, name='getBatchNames'),
     url(r'stddelete$', views.stddelete, name='stddelete'),
     url(r'stdupdate$', views.stdupdate, name='stdupdate'),
-    url(r'collect$', views.collect, name='collect')
+    url(r'collect$', views.collect, name='collect'),
+    url(r'studentFee$', views.studentFee, name='studentFee')
 ]

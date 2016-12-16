@@ -21,3 +21,12 @@ class Batch(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class Fee(models.Model):
+	studentId = models.IntegerField()
+	installments = models.IntegerField()
+	amountPerInst = models.IntegerField()
+	paidInst = models.IntegerField()
+
+	def __str__(self):
+		return str(studentId)

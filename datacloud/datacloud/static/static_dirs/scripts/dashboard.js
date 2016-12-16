@@ -15,10 +15,11 @@ function viewDetails(std) {
     }
     highlightedSTD = std.id;
     // create the update and delete buttons
-    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button><button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
+    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' data-target='#studentFee'>MANAGE FEES</button><button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
     btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
     document.getElementById("deleteStudentButton").innerHTML = btnDelHTML;
     document.getElementById("udbuttons").innerHTML = btnHTML;
+    
     document.getElementById("DelstdName").innerHTML = std.name;
     // fill up the update form
     document.getElementById("uid").value = std.id;
@@ -49,6 +50,32 @@ function viewDetails(std) {
         }
     }
 
+    document.getElementById("studentFeeID").value = std.id;
+    document.getElementById("studentFeeBID").value = std.batch;
+    if (std.fee === "N") {
+        $("#undefined").slideDown();
+        $("#updateFeeLabel").hide();
+        document.getElementById("installments1").innerHTML = "NA";
+        document.getElementById("amount1").innerHTML = "NA";
+        document.getElementById("paid1").innerHTML = "NA";
+        document.getElementById("installments").value = null;
+        document.getElementById("amount").value = null;
+        document.getElementById("paid").value = null;
+
+    } else {
+        $("#undefined").slideUp();
+        document.getElementById("installments1").innerHTML = std.installments;
+        document.getElementById("amount1").innerHTML = std.amount;
+        document.getElementById("paid1").innerHTML = std.paid;
+        document.getElementById("installments").value = std.installments;
+        document.getElementById("amount").value = std.amount;
+        document.getElementById("paid").value = std.paid;
+    }
+
+}
+
+function updateFee() {
+    $("#undefined").slideToggle();
 }
 
 function getStudents(batchName) {
