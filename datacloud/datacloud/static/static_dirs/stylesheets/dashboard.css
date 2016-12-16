@@ -110,7 +110,7 @@ a:hover {
 }
 
 #fees:hover, #search:hover, #grades:hover, #courses:hover, #surveys:hover, #workforce:hover, #about:hover {
-  background-color: green;
+  background-color: black;
 }
 
 #delete {
