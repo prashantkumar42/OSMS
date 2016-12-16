@@ -33,13 +33,13 @@
                 <div class="row" id="fees">
                     Fee Management
                 </div>
-                <div class="row" id="workforce">
+                <!--<div class="row" id="workforce">
                     Workforce
                 </div>
                 <div class="row" id="surveys">
                     Enquiries &amp; Surveys 
-                </div>
-                <div class="row" id="about">
+                </div>-->
+                <div data-toggle="modal" data-target="#aboutModal" class="row" id="about">
                     About
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <div id="studentList">                   
                 </div>
                 <div class="row student" style="padding-top:2.5%;background-color:rgb(3, 29, 52)">
-                    <button class="btn btn-primary">UPDATE BATCH</button> 
+                    <button data-toggle="modal" data-target="#updateBatch" class="btn btn-primary">UPDATE BATCH</button> 
                     <span data-toggle="modal" data-target="#deleteBatch" class="pull-right glyphicon glyphicon-trash" id="delete"></span>
                 </div>
             </div>
@@ -91,6 +91,23 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" role="dialog" id="aboutModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title"><b>Online School Management System</b></h4>
+                    </div>
+                    <div class="muli modal-body">
+                        <p>
+                            Version: 1.11.0 <br>
+                            License: GNU GPL v3.0 <br>
+                            Developer: <a href="http://pranshu258.github.io">Pranshu Gupta</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" role="dialog" id="addBatch">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -109,6 +126,29 @@
                                 </div>
                             </div>
                             <button type="submit" class="muli btn btn-primary">Add Batch</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" id="updateBatch">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title">Update Batch</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="../services/updateBatch" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="sr-only" for="name">Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Name</div>
+                                    <input type="text" class="form-control" name="name" id="bname" placeholder="Enter Batch Name">
+                                </div>
+                            </div>
+                            <button type="submit" class="muli btn btn-primary">Update</button>
                         </form>
                     </div>
                 </div>
