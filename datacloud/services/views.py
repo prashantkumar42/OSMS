@@ -102,21 +102,15 @@ def stdupdate(request):
         validated = True
 
     if validated and request.user.is_authenticated:
-        # Delete old entry in the student table
-        models.Student.objects.filter(id=rid).delete()
-
-        # Create an entry in the student table
-        
-        student = models.Student(
-            name = rname,
-            father = rfather,
-            mother = rmother,
-            batch = rbatch,
-            age = rage,
-            gender = rgender,
-            address = raddress,
-            contact = rcontact
-        )
+        student = models.Student.objects.get(id=rid)        
+        student.name = rname
+        student.father = rfather
+        student.mother = rmother
+        student.batch = rbatch
+        student.age = rage
+        student.gender = rgender
+        student.address = raddress
+        student.contact = rcontact
         student.save()
 
     return redirect('../dashboard/?batch=' + rbatch)

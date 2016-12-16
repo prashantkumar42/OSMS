@@ -1,0 +1,71 @@
+commit fe11a7c672d8ab6db7c617933cc923b2568703a8
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Fri Dec 16 11:20:09 2016 +0530
+
+    added updateBatch and about modals
+
+commit f23ee99547fc2aaf12b664b2db9b80f2f83f6169
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Thu Dec 15 23:34:15 2016 +0530
+
+    added modal for batch deletion
+
+commit 0b19eb2c01f14b39901685a980a22ea04f040cdb
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Thu Dec 15 23:33:57 2016 +0530
+
+    added moal for deregister confirmation
+
+commit 75ed3c3130109fddb15b17989abdded01d0c9235
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Thu Dec 15 21:31:34 2016 +0530
+
+    fixed issues related to batch retrieval
+
+commit fe3f00b4f34a9658d625a78dc2f5659a63afa18b
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Thu Dec 15 20:20:46 2016 +0530
+
+    finished batch addition and retrieval API
+
+commit 509e9adf5ca0d2cc56332dc0e04c3fcb95e1e44f
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Thu Dec 15 17:01:57 2016 +0530
+
+    fixed the height of batchList column
+
+commit 9e37ad20994384b5a332188fadd627e0f6db33b2
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Wed Dec 14 11:33:21 2016 +0530
+
+    added more links on the dashboard side pane
+
+commit b1920cbefb4bef152f1385aa4477b91167f5388a
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Tue Dec 13 21:16:38 2016 +0530
+
+    fixed jquery not found error
+
+commit 9487a5afbb7da9fc6b0140be18eed906c57a8b2f
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Tue Dec 13 21:08:43 2016 +0530
+
+    redesigned the home page
+
+commit 2ce59e49114b4c64571e54f0dc71a6519c6c9306
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Tue Dec 13 19:47:01 2016 +0530
+
+    added login and fixed color change on double click
+
+commit a49507e790e2bca4bc3ad06afd09e5d57bdc4b6f
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Tue Dec 13 10:57:35 2016 +0530
+
+    added batch model and corrected absolute links
+
+commit 9a3bb0d98b92058f04ab17c29aeffa31b5fea22f
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Tue Dec 13 10:13:38 2016 +0530
+
+    finished v1.0

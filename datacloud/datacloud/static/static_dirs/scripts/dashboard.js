@@ -72,7 +72,8 @@ function getStudents(batchName) {
         }
     }
 
-    document.getElementById("deleteBatchLabel").innerText = "Yes, I want to delete " + batchName + " batch!"
+    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
+    document.getElementById("bname").value = batchName;
 
     // get the data 
     var data = null;
