@@ -142,6 +142,7 @@
                     <div class="modal-body">
                         <form action="../services/updateBatch" method="POST">
                             {% csrf_token %}
+                            <input type="hidden" name="oname" id="oname">
                             <div class="form-group">
                                 <label class="sr-only" for="name">Name</label>
                                 <div class="input-group">

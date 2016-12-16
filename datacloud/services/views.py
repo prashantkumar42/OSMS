@@ -10,10 +10,12 @@ def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
         # Create and send a JSON response
-        array = models.Student.objects.filter(batch=rbatch)
+        batch = models.Batch.objects.get(name=rbatch)
+        print("getting all student for " + rbatch)
+        array = models.Student.objects.filter(batch=batch.id)
         students = []
         for a in array:
-            student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":a.batch, "age":a.age}
+            student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -34,8 +36,8 @@ def getBatchNames(request):
         array = models.Batch.objects.all()
         batches = []
         for a in array:
-            batches.insert(len(batches), a.name)
-        batches.sort()
+            batches.insert(len(batches), {"id":a.id, "name":a.name})
+        batches.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':batches})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
@@ -50,6 +52,20 @@ def addBatch(request):
         batch = models.Batch(
             name = rname
         )
+        batch.save()
+    
+    return redirect('../dashboard/?batch=' + rname)
+
+def updateBatch(request):
+    oname = request.POST["oname"]
+    rname = request.POST["name"]
+    validated = False
+    if rname:
+        validated = True    
+    
+    if validated and request.user.is_authenticated:
+        batch = models.Batch.objects.get(name=oname)
+        batch.name = rname
         batch.save()
     
     return redirect('../dashboard/?batch=' + rname)
@@ -71,11 +87,13 @@ def collect(request):
 
     # Create an entry in the activity table
     if validated and request.user.is_authenticated:
+        batch = models.Batch.objects.get(name=rbatch)
+
         student = models.Student(
             name = rname,
             father = rfather,
             mother = rmother,
-            batch = rbatch,
+            batch = batch.id,
             age = rage,
             gender = rgender,
             address = raddress,
@@ -102,11 +120,12 @@ def stdupdate(request):
         validated = True
 
     if validated and request.user.is_authenticated:
+        batch = models.Batch.objects.get(name=rbatch)
         student = models.Student.objects.get(id=rid)        
         student.name = rname
         student.father = rfather
         student.mother = rmother
-        student.batch = rbatch
+        student.batch = batch.id
         student.age = rage
         student.gender = rgender
         student.address = raddress

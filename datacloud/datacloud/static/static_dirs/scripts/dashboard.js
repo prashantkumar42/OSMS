@@ -74,6 +74,7 @@ function getStudents(batchName) {
 
     document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
     document.getElementById("bname").value = batchName;
+    document.getElementById("oname").value = batchName;
 
     // get the data 
     var data = null;
@@ -117,8 +118,8 @@ function getBatches() {
             //console.log(students);
             html = ""; ddhtml = "";
             for (i = 0; i < batches.length; i++) {
-                html += "<div class='row batch' id='" + batches[i] + "' onclick='getStudents(\"" + batches[i] + "\")'>" + batches[i] + "</div>"; 
-                ddhtml += "<option>" + batches[i] + "</option>"
+                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\")'>" + batches[i].name + "</div>"; 
+                ddhtml += "<option>" + batches[i].name + "</option>"
                 //console.log(students[i].name);
             }
             //console.log(html);
@@ -130,9 +131,9 @@ function getBatches() {
                 console.log("doing getStudents for " + sentBatch);
                 getStudents(sentBatch); 
             } else {
-                console.log("doing getStudents for else");
                 if (batches.length > 0) {
-                    getStudents(batches[0]);
+                    console.log("doing getStudents in else for " + batches[0].name);
+                    getStudents(batches[0].name);
                 }
             }
         }

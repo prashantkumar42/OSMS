@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     url(r'api$', views.api, name='api'),
     url(r'addBatch$', views.addBatch, name='addBatch'),
+    url(r'updateBatch$', views.updateBatch, name='updateBatch'),
     url(r'getBatchNames$', views.getBatchNames, name='getBatchNames'),
     url(r'stddelete$', views.stddelete, name='stddelete'),
     url(r'stdupdate$', views.stdupdate, name='stdupdate'),
