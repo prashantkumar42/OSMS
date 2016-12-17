@@ -21,14 +21,14 @@
                 <div id="batchListCol">
 
                 </div>
-                <div class="row" style="margin-top:1.4%" id="search">
-                    Advanced Search
+                <div class="row" style="margin-top:1.4%" id="search" onclick="activateSearch()">
+                    Search
                 </div>
                 <div class="row" id="courses">
-                    Course Management
+                    Courses
                 </div>
                 <div class="row" id="grades">
-                    Grades Management
+                    Analytics
                 </div>
                 <!--<div class="row" id="workforce">
                     Workforce
@@ -40,53 +40,75 @@
                     About
                 </div>
             </div>
-            <div class="col-sm-3 muli" id="panel2">
-                <div id="studentPane">
-                    <div class="row student" id="stdlistname" style="background-color: rgb(3, 29, 52)">
-                        STUDENTS
+            <div id="batchContent">
+                <div class="col-sm-3 muli" id="panel2">
+                    <div id="studentPane">
+                        <div class="row student" id="stdlistname" style="background-color: rgb(3, 29, 52)">
+                            STUDENTS
+                        </div>
+                        <div class="row student" style="background-color: rgb(3, 29, 52)">
+                            <i id="hover" data-toggle="modal" data-target="#addStudent">Add a new Student</i>
+                        </div>
+                        <div id="studentList">                   
+                        </div>
+                        <div class="row student" style="padding-top:2.5%;background-color:rgb(3, 29, 52)">
+                            <button data-toggle="modal" data-target="#updateBatch" class="btn btn-primary">UPDATE BATCH</button> 
+                            <span data-toggle="modal" data-target="#deleteBatch" class="pull-right glyphicon glyphicon-trash" id="delete"></span>
+                        </div>
                     </div>
-                    <div class="row student" style="background-color: rgb(3, 29, 52)">
-                        <i id="hover" data-toggle="modal" data-target="#addStudent">Add a new Student</i>
+                </div>
+                <div class="col-sm-7" id="panel3">
+                    <div class="row muli pull-right" style="padding:1%;padding-right:3%">
+                        {{username}} <a href="logout/">sign out</a>
                     </div>
-                    <div id="studentList">                   
-                    </div>
-                    <div class="row student" style="padding-top:2.5%;background-color:rgb(3, 29, 52)">
-                        <button data-toggle="modal" data-target="#updateBatch" class="btn btn-primary">UPDATE BATCH</button> 
-                        <span data-toggle="modal" data-target="#deleteBatch" class="pull-right glyphicon glyphicon-trash" id="delete"></span>
+                    <div class="row" id="br1"></div>
+                    <div class="row muli" id="studentDetails">
+                        <h1 class="big" id="stdName"></h1>
+                        <br><br>
+                        <div class="well" style="border-radius:0">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <br>
+                                    <div class="josephin" style="text-align:center;font-size:1000%" id="stdBatch"></div>
+                                    <br>
+                                </div>
+                                <div class="col-sm-8 border-left" style="text-align:right">
+                                    <h3 class="titillium" id="stdContact"></h3>
+                                    <hr>
+                                    Father: <b id="stdFather"></b><br>
+                                    Mother: <b id="stdMother"></b><br>
+                                    Age: <b id="stdAge"></b><br>
+                                    Gender: <b id="stdGender"></b><br>
+                                    <hr>
+                                    Address: <b id="stdAddress"></b><br><br>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <br>
+                        <div id="udbuttons"></div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-sm-7" id="panel3">
-                <div class="row muli pull-right" style="padding:1%;padding-right:3%">
-                    {{username}} <a href="logout/">sign out</a>
-                </div>
-                <div class="row" id="br1"></div>
-                <div class="row muli" id="studentDetails">
-                    <h1 class="big" id="stdName"></h1>
-                    <br><br>
-                    <div class="well" style="border-radius:0">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <br>
-                                <div class="josephin" style="text-align:center;font-size:1000%" id="stdBatch"></div>
-                                <br>
-                            </div>
-                            <div class="col-sm-8 border-left" style="text-align:right">
-                                <h3 class="titillium" id="stdContact"></h3>
-                                <hr>
-                                Father: <b id="stdFather"></b><br>
-                                Mother: <b id="stdMother"></b><br>
-                                Age: <b id="stdAge"></b><br>
-                                Gender: <b id="stdGender"></b><br>
-                                <hr>
-                                Address: <b id="stdAddress"></b><br><br>
+            <div id="searchContent">
+                <div class="col-sm-3 muli" id="panel2">
+                    <form action="../services/search" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Name</label>
+                            <div class="input-group" style="padding:4%">
+                                <input type="text" class="form-control" style="background-color:rgb(1,13,22);color:#fff;border:none;box-shadow:none" name="searchkey" id="searchkey" placeholder="Search Here">
+                                <div class="input-group-addon" style="background-color:rgb(1,13,22);color:#fff;border:none"><span class="glyphicon glyphicon-search"></span></div>
                             </div>
                         </div>
-                        
+                    </form>                    
+                </div>
+                <div class="col-sm-7" id="panel3">
+                    <div class="row muli pull-right" style="padding:1%;padding-right:3%">
+                        {{username}} <a href="logout/">sign out</a>
                     </div>
-                    <br>
-                    <div id="udbuttons"></div>
-
+                    <div class="row" id="br1"></div>                    
                 </div>
             </div>
         </div>

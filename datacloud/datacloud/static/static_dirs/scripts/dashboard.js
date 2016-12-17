@@ -80,10 +80,15 @@ function updateFee() {
 
 function getStudents(batchName) {
     //console.log(batchName)
+    $("#batchContent").show();
+    $("#searchContent").hide();
+    document.getElementById("search").style = "";
+
     endpoint = "/services/api?batch=" + batchName;
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
+   
     document.getElementById(batchName).style = "background-color:#666";
-    if (highlightedBatch != null) {
+    if (highlightedBatch != null && highlightedBatch != batchName) {
         document.getElementById(highlightedBatch).style = "";
     }
     highlightedBatch = batchName;
@@ -174,3 +179,11 @@ function getBatches() {
 
 $("#studentDetails").hide();
 getBatches();
+
+
+function activateSearch() {
+    $("#batchContent").hide();
+    $("#searchContent").show();
+    document.getElementById(highlightedBatch).style = "";
+    document.getElementById("search").style = "background-color:black";
+}
