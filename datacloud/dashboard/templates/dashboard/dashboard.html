@@ -93,7 +93,7 @@
             </div>
             <div id="searchContent">
                 <div class="col-sm-3 muli" id="panel2">
-                    <div style="padding:4%;padding-bottom:2%">
+                    <div id="searchReg">
                         <div class="form-group">
                             <label class="sr-only" for="name">Name</label>
                             <div class="input-group">
@@ -101,59 +101,62 @@
                                 <div class="input-group-addon" onclick="search()" id="searchbutton"><span class="glyphicon glyphicon-search"></span></div>
                             </div>
                         </div>
-                        <h5>FILTERS</h5> 
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="checksbatch">Batch
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="sbatch">Batch</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">Batch</div>
-                                <select class="form-control" name="sbatch" id="ubatch2">
-                                </select>
+                        <h6 onclick="showFilters()" style="cursor:pointer"><i>add filters</i></h6> 
+                        <div id="filterList">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="checksbatch">Batch
+                                </label>
                             </div>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="checksgender">Gender
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="sgender">Gender</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">Gender</div>
-                                <select class="form-control" name="sgender">
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
-                                </select>
+                            <div class="form-group">
+                                <label class="sr-only" for="sbatch">Batch</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Batch</div>
+                                    <select class="form-control" name="sbatch" id="ubatch2">
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="checksaddress">Address
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="saddress">Address</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">Address</div>
-                                <select class="form-control" name="address" id="address2">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="checksgender">Gender
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="sgender">Gender</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Gender</div>
+                                    <select class="form-control" name="sgender">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="checksaddress">Address
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="saddress">Address</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Address</div>
+                                    <select class="form-control" name="address" id="address2">
 
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="checksfee">Pending Fee
-                            </label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="checksfee">Pending Fee
+                                </label>
+                            </div>
+                            <div onclick="showFilters()" style="text-align:center;cursor:pointer"><span class="glyphicon glyphicon-chevron-up"></span></div>
                         </div>
                     </div>
-                    <h5 style="padding-left:4%">RESULTS</h5>
+                    <h5 style="padding-left:4%;margin-top:30%;">RESULTS</h5>
                     <div id="studentSearchResults"> 
-                        <i style="padding-left:4%">Nothing to show</i>                 
+                        <div class="student" style="background-color:rgb(3,29,52)">Nothing to show</div>
                     </div>
                 </div>
                 <div class="col-sm-7" id="panel3">

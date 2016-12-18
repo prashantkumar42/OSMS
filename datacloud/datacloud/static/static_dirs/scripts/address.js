@@ -16,7 +16,16 @@ locations = [
     "Street 6, City 2",
     "Street 7, City 2",
     "Street 8, City 2",
-    "Street 9, City 2"
+    "Street 9, City 2",
+    "Street 1, City 3",
+    "Street 2, City 3",
+    "Street 3, City 3",
+    "Street 4, City 3",
+    "Street 5, City 3",
+    "Street 6, City 3",
+    "Street 7, City 3",
+    "Street 8, City 3",
+    "Street 9, City 3"
 ]
 
 ahtml = "";

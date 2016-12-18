@@ -178,10 +178,6 @@ function getBatches() {
     xhr.send(data);    
 }
 
-$("#studentDetails").hide();
-getBatches();
-
-
 function activateSearch() {
     $("#batchContent").hide();
     $("#searchContent").show();
@@ -192,3 +188,11 @@ function activateSearch() {
 function search() {
     alert(0);
 }
+
+function showFilters() {
+    $("#filterList").slideToggle();
+}
+
+$("#studentDetails").hide();
+getBatches();
+$("#filterList").slideToggle();
