@@ -34,7 +34,7 @@ for (var i = 0; i < locations.length; i++) {
 }
 
 document.getElementById("address1").innerHTML = ahtml;
-document.getElementById("address2").innerHTML = ahtml;
+document.getElementById("saddress").innerHTML = ahtml;
 document.getElementById("uaddress").innerHTML = ahtml;
 
 

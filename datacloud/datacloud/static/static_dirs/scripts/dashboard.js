@@ -157,7 +157,7 @@ function getBatches() {
             //console.log(html);
             document.getElementById("batchListCol").innerHTML = html;
             document.getElementById("ubatch1").innerHTML = ddhtml;
-            document.getElementById("ubatch2").innerHTML = ddhtml;
+            document.getElementById("sbatch").innerHTML = ddhtml;
             document.getElementById("ubatch").innerHTML = ddhtml;
             console.log("sent batch is " + sentBatch)
             if (sentBatch !=  null && sentBatch != "") {
@@ -178,21 +178,5 @@ function getBatches() {
     xhr.send(data);    
 }
 
-function activateSearch() {
-    $("#batchContent").hide();
-    $("#searchContent").show();
-    document.getElementById(highlightedBatch).style = "";
-    document.getElementById("search").style = "background-color:darkgreen";
-}
-
-function search() {
-    alert(0);
-}
-
-function showFilters() {
-    $("#filterList").slideToggle();
-}
-
 $("#studentDetails").hide();
 getBatches();
-$("#filterList").slideToggle();
