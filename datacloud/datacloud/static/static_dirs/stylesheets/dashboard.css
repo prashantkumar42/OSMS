@@ -110,7 +110,7 @@ a:hover {
 }
 
 #fees:hover, #search:hover, #grades:hover, #courses:hover, #surveys:hover, #workforce:hover, #about:hover {
-  background-color: black;
+  background-color: green;
 }
 
 #delete {
@@ -119,5 +119,9 @@ a:hover {
 }
 #delete:hover {
   color: orangered;
+  cursor: pointer;
+}
+
+#searchbutton:hover {
   cursor: pointer;
 }

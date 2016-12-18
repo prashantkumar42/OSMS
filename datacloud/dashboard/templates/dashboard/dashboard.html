@@ -25,7 +25,7 @@
                     Search
                 </div>
                 <div class="row" id="courses">
-                    Courses
+                    Academics
                 </div>
                 <div class="row" id="grades">
                     Analytics
@@ -93,16 +93,72 @@
             </div>
             <div id="searchContent">
                 <div class="col-sm-3 muli" id="panel2">
-                    <form action="../services/search" method="POST">
-                        {% csrf_token %}
+                    <div style="padding:4%;padding-bottom:2%">
                         <div class="form-group">
                             <label class="sr-only" for="name">Name</label>
-                            <div class="input-group" style="padding:4%">
-                                <input type="text" class="form-control" style="background-color:rgb(1,13,22);color:#fff;border:none;box-shadow:none" name="searchkey" id="searchkey" placeholder="Search Here">
-                                <div class="input-group-addon" style="background-color:rgb(1,13,22);color:#fff;border:none"><span class="glyphicon glyphicon-search"></span></div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="searchkey" id="searchkey" placeholder="Search Here">
+                                <div class="input-group-addon" onclick="search()" id="searchbutton"><span class="glyphicon glyphicon-search"></span></div>
                             </div>
                         </div>
-                    </form>                    
+                        <h5>FILTERS</h5> 
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="checksbatch">Batch
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="sbatch">Batch</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Batch</div>
+                                <select class="form-control" name="sbatch" id="ubatch2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="checksgender">Gender
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="sgender">Gender</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Gender</div>
+                                <select class="form-control" name="sgender">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="checksage">Age
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="sage">Age</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Age</div>
+                                <input type="number" class="form-control" name="sage" id="sage" placeholder="Enter Age">
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="checksaddress">Address
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="saddress">Address</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Address</div>
+                                <textarea type="textarea" class="form-control" name="saddress" id="saddress" placeholder="Enter Address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 style="padding-left:4%">RESULTS</h5>
+                    </div>
                 </div>
                 <div class="col-sm-7" id="panel3">
                     <div class="row muli pull-right" style="padding:1%;padding-right:3%">
