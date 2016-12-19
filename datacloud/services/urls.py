@@ -3,6 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'search$', views.search, name='search'),
     url(r'api$', views.api, name='api'),
     url(r'addBatch$', views.addBatch, name='addBatch'),
     url(r'updateBatch$', views.updateBatch, name='updateBatch'),

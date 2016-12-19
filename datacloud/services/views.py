@@ -182,3 +182,25 @@ def studentFee(request):
             fee.save()
 
     return redirect('../dashboard/?batch=' + rbatch)
+
+
+def search(request):
+    # http://127.0.0.1:8000/services/search?keyword=zoobi&isbatch=0&batch=Learner&isgender=1&gender=Male&isaddress=0&address=hkh&isfee=22
+    keyword = request.GET.get('keyword')
+    isbatch = request.GET.get('isbatch')
+    batch = request.GET.get('batch')
+    isgender = request.GET.get('isgender')
+    gender = request.GET.get('gender')
+    isaddress = request.GET.get('isaddress')
+    address = request.GET.get('address')
+    isfee = request.GET.get('isfee')
+
+    validated = False
+    if keyword and isfee and isbatch and isgender and isaddress and address and batch and gender:
+        validated = True 
+
+    if validated and request.user.is_authenticated:
+        text = keyword + " " + str(isbatch) + " " + batch + " " + str(isgender) + " " + gender + " " + str(isaddress) + " " + address + " " + str(isfee)
+        return HttpResponse(text)
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
