@@ -27,8 +27,8 @@ function search() {
     batch = document.getElementById("sbatch").value;
     gender = document.getElementById("sgender").value;
     address = document.getElementById("saddress").value;
-    text = isbatch + " " + batch + " " + isgender + " " + gender + " " + isaddress + " " + address + " " + isfee;
-    alert(text);
+    text = isbatch + ", " + batch + ", " + isgender + ", " + gender + ", " + isaddress + ", " + address + ", " + isfee;
+    console.log(text);
 }
 
 function showFilters() {

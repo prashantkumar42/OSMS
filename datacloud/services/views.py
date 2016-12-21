@@ -10,7 +10,8 @@ def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
         # Create and send a JSON response
-        batch = models.Batch.objects.get(name=rbatch)
+        kwargs = {"name":rbatch}
+        batch = models.Batch.objects.get(**kwargs)
         print("getting all student for " + rbatch)
         array = models.Student.objects.filter(batch=batch.id)
         students = []
@@ -185,22 +186,42 @@ def studentFee(request):
 
 
 def search(request):
-    # http://127.0.0.1:8000/services/search?keyword=zoobi&isbatch=0&batch=Learner&isgender=1&gender=Male&isaddress=0&address=hkh&isfee=22
+    # http://127.0.0.1:8000/services/search?keyword=zoobi&isbatch=0&batch=Class%201&isgender=1&gender=Male&isaddress=0&address=hkh&isfee=22
     keyword = request.GET.get('keyword')
     isbatch = request.GET.get('isbatch')
-    batch = request.GET.get('batch')
+    rbatch = request.GET.get('batch')
     isgender = request.GET.get('isgender')
     gender = request.GET.get('gender')
     isaddress = request.GET.get('isaddress')
     address = request.GET.get('address')
     isfee = request.GET.get('isfee')
 
+    kwargs = {}
     validated = False
-    if keyword and isfee and isbatch and isgender and isaddress and address and batch and gender:
-        validated = True 
-
+    if keyword and isfee and isbatch and isgender and isaddress and address and rbatch and gender:
+        validated = True
+        kwargs['name__icontains'] = keyword
+        if isbatch == '1':
+            batchid = (models.Batch.objects.get(name=rbatch)).id
+            kwargs['batch'] = batchid
+        if isgender == '1':
+            kwargs['gender'] = gender
+        if isaddress == '1':
+            kwargs['address'] = address
+    print(kwargs)
     if validated and request.user.is_authenticated:
-        text = keyword + " " + str(isbatch) + " " + batch + " " + str(isgender) + " " + gender + " " + str(isaddress) + " " + address + " " + str(isfee)
-        return HttpResponse(text)
+        array = models.Student.objects.filter(**kwargs)
+        students = []
+        for a in array:
+            fee = models.Fee.objects.filter(studentId=a.id)
+            if len(fee):
+                if isfee == '1':
+                    pass
+                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+            else:
+                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age, "fee":"N"}
+            students.insert(len(students), student)
+        students.sort(key=lambda k: k["name"], reverse=False)
+        return JsonResponse({'response':students})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
