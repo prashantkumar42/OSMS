@@ -1,15 +1,33 @@
-function activateSearch() {
-    $("#batchContent").hide();
-    $("#searchContent").show();
-    document.getElementById(highlightedBatch).style = "";
-    document.getElementById("search").style = "background-color:darkgreen";
-}
-
 isbatch = 0;
 isgender = 0;
 isaddress = 0;
 isfee = 0;
 keytype = 1;
+
+function activateSearch() {
+    $("#batchContent").hide();
+    document.getElementById("studentList").innerHTML = "";
+    $("#searchContent").show();
+    $("#studentDetails").hide()
+    document.getElementById(highlightedBatch).style = "";
+    document.getElementById("search").style = "background-color:darkgreen";
+    if (isbatch == 1) {
+        document.getElementById("checksbatch").click();
+        isbatch = 0;
+    }
+    if (isgender == 1) {
+        document.getElementById("checksgender").click();
+        isgender = 0;
+    }
+    if (isaddress == 1) {
+        document.getElementById("checksaddress").click();
+        isaddress = 0;
+    }
+    if (isfee == 1) {
+        document.getElementById("checksfee").click();
+        isfee = 0;
+    }
+}
 
 function toggle_isbatch() {
     isbatch = (isbatch + 1)%2;
@@ -29,6 +47,8 @@ function searchType(value) {
 }
 
 function search() {
+    highlightedSTD = null;
+    $("#filterList").slideUp();
     batch = document.getElementById("sbatch").value;
     gender = document.getElementById("sgender").value;
     address = document.getElementById("saddress").value;
@@ -40,7 +60,21 @@ function search() {
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            alert(this.responseText);
+            students = (JSON.parse(this.responseText)).response;
+            if (students.length > 0) {
+                $("#studentDetails").show()
+                html = "";
+                for (i = 0; i < students.length; i++) {
+                    html += "<div class='row student' id='student" + students[i].id + "' onclick='viewDetails(" + JSON.stringify(students[i]) + ")'>" + students[i].name + "</div>"; 
+                    //console.log(students[i].name);
+                }
+                //console.log(html);
+                document.getElementById("studentSearchResults").innerHTML = html;
+                viewDetails(students[0]);
+            } else {
+                $("#studentDetails").hide()
+                document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
+            }
         }
     });
     xhr.open("GET", endpoint);

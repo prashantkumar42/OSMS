@@ -1,5 +1,7 @@
 function viewDetails(std) {
     //console.log(std);
+    $("#studentDetails").show()
+    console.log("viewDetails was called");
     document.getElementById("stdName").innerHTML = std.name;
     document.getElementById("stdBatch").innerHTML = (std.batch)[0];
     document.getElementById("stdContact").innerHTML = std.contact;
@@ -82,6 +84,7 @@ function getStudents(batchName) {
     //console.log(batchName)
     $("#batchContent").show();
     $("#searchContent").hide();
+    document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
     document.getElementById("search").style = "";
 
     endpoint = "/services/api?batch=" + batchName;
