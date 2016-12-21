@@ -101,8 +101,18 @@
                                 <div class="input-group-addon" onclick="search()" id="searchbutton"><span class="glyphicon glyphicon-search"></span></div>
                             </div>
                         </div>
+                        <div style="display:inline">
+                            <form>
+                                <div class="row" style="margin:0;padding:0">
+                                    <div style="margin:0;padding:0" onclick="searchType(1)" class="col-sm-4"><input type="radio" name="keytype" value="name" checked> Student</div>
+                                    <div style="margin:0;padding:0" onclick="searchType(2)" class="col-sm-4"><input type="radio" name="keytype" value="father"> Father</div>
+                                    <div style="margin:0;padding:0" onclick="searchType(3)" class="col-sm-4"><input type="radio" name="keytype" value="mother"> Mother</div>
+                                </div>
+                            </form>
+                        </div>
                         <h6 onclick="showFilters()" style="cursor:pointer"><i>add filters</i></h6>
-                        <div id="filterList"> <br>
+                        <div id="filterList">                   
+                            <br>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" onclick="toggle_isbatch()" id="checksbatch">Batch
@@ -154,7 +164,7 @@
                             <div onclick="showFilters()" style="text-align:center;cursor:pointer"><span class="glyphicon glyphicon-chevron-up"></span></div>
                         </div>
                     </div>
-                    <h5 style="padding-left:4%;margin-top:32%;">RESULTS</h5>
+                    <h5 style="padding-left:4%;margin-top:42%;">RESULTS</h5>
                     <div id="studentSearchResults"> 
                         <div class="student" style="background-color:rgb(3,29,52)">Nothing to show</div>
                     </div>

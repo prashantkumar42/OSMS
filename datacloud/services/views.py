@@ -188,6 +188,7 @@ def studentFee(request):
 def search(request):
     # http://127.0.0.1:8000/services/search?keyword=zoobi&isbatch=0&batch=Class%201&isgender=1&gender=Male&isaddress=0&address=hkh&isfee=22
     keyword = request.GET.get('keyword')
+    keytype = request.GET.get('keytype')
     isbatch = request.GET.get('isbatch')
     rbatch = request.GET.get('batch')
     isgender = request.GET.get('isgender')
@@ -200,7 +201,14 @@ def search(request):
     validated = False
     if keyword and isfee and isbatch and isgender and isaddress and address and rbatch and gender:
         validated = True
-        kwargs['name__icontains'] = keyword
+
+        if keytype == "1":
+            kwargs['name__icontains'] = keyword
+        elif keytype == "2":
+            kwargs['father__icontains'] = keyword
+        elif keytype == "3":
+            kwargs['mother__icontains'] = keyword
+
         if isbatch == '1':
             batchid = (models.Batch.objects.get(name=rbatch)).id
             kwargs['batch'] = batchid
@@ -208,6 +216,7 @@ def search(request):
             kwargs['gender'] = gender
         if isaddress == '1':
             kwargs['address'] = address
+
     print(kwargs)
     if validated and request.user.is_authenticated:
         array = models.Student.objects.filter(**kwargs)
