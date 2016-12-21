@@ -199,7 +199,7 @@ def search(request):
 
     kwargs = {}
     validated = False
-    if keyword and isfee and isbatch and isgender and isaddress and address and rbatch and gender:
+    if isfee and isbatch and isgender and isaddress and address and rbatch and gender:
         validated = True
 
         if keytype == "1":
