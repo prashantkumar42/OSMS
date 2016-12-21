@@ -35,7 +35,16 @@ function search() {
     keyword = document.getElementById("searchkey").value;
     endpoint = "/services/search?keyword="+ keyword + "&keytype=" + keytype + "&isbatch=" + isbatch + "&batch=" + batch + "&isgender=" + isgender + "&gender=" + gender + "&isaddress=" + isaddress + "&address=" + address + "&isfee=" + isfee;
     console.log(endpoint);
-    
+    var data = null;
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            alert(this.responseText);
+        }
+    });
+    xhr.open("GET", endpoint);
+    xhr.send(data);    
 }
 
 function showFilters() {
