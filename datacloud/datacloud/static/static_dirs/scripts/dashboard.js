@@ -73,7 +73,7 @@ function viewDetails(std) {
         document.getElementById("amount").value = std.amount;
         document.getElementById("paid").value = std.paid;
     }
-
+    console.log(document.getElementById("studentDetails").innerHTML)
 }
 
 function updateFee() {

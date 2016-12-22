@@ -24,18 +24,9 @@
                 <div class="row" style="margin-top:1.4%" id="search" onclick="activateSearch()">
                     Search
                 </div>
-                <div class="row" id="courses">
-                    Academics
-                </div>
                 <div class="row" id="grades">
                     Analytics
                 </div>
-                <!--<div class="row" id="workforce">
-                    Workforce
-                </div>
-                <div class="row" id="surveys">
-                    Enquiries &amp; Surveys 
-                </div>-->
                 <div data-toggle="modal" data-target="#aboutModal" class="row" id="about">
                     About
                 </div>
@@ -52,7 +43,8 @@
                         <div id="studentList">                   
                         </div>
                         <div class="row student" style="padding-top:2.5%;background-color:rgb(3, 29, 52)">
-                            <button data-toggle="modal" data-target="#updateBatch" class="btn btn-primary">UPDATE BATCH</button> 
+                            <button data-toggle="modal" data-target="#updateBatch" class="btn btn-primary">RENAME BATCH</button>
+                            <button data-toggle="modal" style="margin-left:2%" data-target="#acadsDialog" class="btn btn-success">COURSE PLAN</button> 
                             <span data-toggle="modal" data-target="#deleteBatch" class="pull-right glyphicon glyphicon-trash" id="delete"></span>
                         </div>
                     </div>
@@ -482,6 +474,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="modal fade" role="dialog" id="acadsDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="muli modal-title">Update Course Plan</h4>
+                    </div>
+                    <div class="muli modal-body">
+                        <br>
+                    </div>
+                </div>
+            </div>            
         </div>
         <script>
             console.log("{{username}}");

@@ -13,19 +13,15 @@ function activateSearch() {
     document.getElementById("search").style = "background-color:darkgreen";
     if (isbatch == 1) {
         document.getElementById("checksbatch").click();
-        isbatch = 0;
     }
     if (isgender == 1) {
         document.getElementById("checksgender").click();
-        isgender = 0;
     }
     if (isaddress == 1) {
         document.getElementById("checksaddress").click();
-        isaddress = 0;
     }
     if (isfee == 1) {
         document.getElementById("checksfee").click();
-        isfee = 0;
     }
 }
 

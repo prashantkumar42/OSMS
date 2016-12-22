@@ -30,3 +30,18 @@ class Fee(models.Model):
 
 	def __str__(self):
 		return str(studentId)
+
+class Courses(models.Model):
+	name = models.CharField(max_length=255)
+	batch = models.IntegerField()
+
+	def __str__(self):
+		return (str(batch) + " " + name) 
+
+class Grades(models.Model):
+	studentId = models.IntegerField()
+	courseID = models.IntegerField()
+	percentage = models.IntegerField()
+
+	def __str__(self):
+		return (str(studentId) + ", " + str(courseID) + ": " + str(percentage) + "%") 
