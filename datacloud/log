@@ -1,3 +1,93 @@
+commit 9ff1d901d930fe6f5d83bebe73483ca61aa14d6f
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Fri Dec 23 00:35:24 2016 +0530
+
+    created models for grades and courses
+
+commit 1fbbd1deba215fba0a5cce2eb48760435c6c94d5
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Wed Dec 21 16:30:04 2016 +0530
+
+    finished with search
+
+commit 025558cbad0da5424475e2495c5e7dcbe21e0358
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Wed Dec 21 12:15:02 2016 +0530
+
+    fixed empty keyword
+
+commit 414fcc52516e32add71df660256bb565882a5584
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Wed Dec 21 12:11:17 2016 +0530
+
+    did the searh query
+
+commit 112fe74647eb10d5218dd9409c7317b18a20a8a7
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Wed Dec 21 12:06:26 2016 +0530
+
+    generated the search url
+
+commit d126146871eab5cf5c345de44c11cbc38702b698
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Wed Dec 21 11:20:30 2016 +0530
+
+    finished search api except for the fee check
+
+commit 340ec0dcf17593dd9cbb8602f80381ab5641553d
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Mon Dec 19 20:44:49 2016 +0530
+
+    created an endpoint for search
+
+commit e7711cbaa2777d3691c0d838499a73e55f8bcf83
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Mon Dec 19 14:36:50 2016 +0530
+
+    handled the valuesof checkboxes in search filters
+
+commit 96c1f0fb2e20c14e171b6402ffde54064a52d375
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sun Dec 18 23:50:44 2016 +0530
+
+    checkboxes have meaning only when the form is submitted, need to fix this
+
+commit d1aa6f0e6cddc7d4254dd0d90003d50aa35e3171
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sun Dec 18 18:56:56 2016 +0530
+
+    added style for search filter section
+
+commit 580807f83763ff45fa3e5684f0d1a3f819c8b5b9
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sun Dec 18 17:29:50 2016 +0530
+
+    fixed address list
+
+commit 023942a5660f7d1f7db93ee3bef942815af7262f
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sun Dec 18 11:32:24 2016 +0530
+
+    ditched age filter in search
+
+commit b243aa771064fbb14b95281eea08695d96d15a2e
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sun Dec 18 11:27:04 2016 +0530
+
+    added search boxes
+
+commit faa27fd7797e4ac51962a47dc310573fdd1ccb0b
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sat Dec 17 23:44:20 2016 +0530
+
+    added search content
+
+commit fad0804475cceab4f021e72848e5cd94d22a6a13
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Sat Dec 17 00:55:25 2016 +0530
+
+    fee management done
+
 commit d6514551253cda5a203cd15637dfeeed5b36049f
 Author: Pranshu Gupta <Pranshu Gupta>
 Date:   Fri Dec 16 16:34:00 2016 +0530
