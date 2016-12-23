@@ -157,6 +157,6 @@ a:hover {
 }
 
 #courseList {
-  height: 52vh;
+  max-height: 52vh;
   overflow-y: auto;
 }

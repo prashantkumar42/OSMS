@@ -80,7 +80,9 @@ function updateFee() {
     $("#undefined").slideToggle();
 }
 
-function getStudents(batchName) {
+function getStudents(batchName, batchID) {
+    getCourses(batchID);
+
     //console.log(batchName)
     $("#batchContent").show();
     $("#searchContent").hide();
@@ -110,6 +112,8 @@ function getStudents(batchName) {
     document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch?batch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
     document.getElementById("bname").value = batchName;
     document.getElementById("oname").value = batchName;
+    document.getElementById("acbatch").value = batchID;
+    document.getElementById("acbatchname").value = batchName;
 
     // get the data 
     var data = null;
@@ -148,14 +152,18 @@ function getBatches() {
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
+            var sentBID;
             console.log(this.responseText);
             batches = (JSON.parse(this.responseText)).response;
             //console.log(students);
             html = ""; ddhtml = "";
             for (i = 0; i < batches.length; i++) {
-                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\")'>" + batches[i].name + "</div>"; 
+                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +")'>" + batches[i].name + "</div>"; 
                 ddhtml += "<option>" + batches[i].name + "</option>"
                 //console.log(students[i].name);
+                if (sentBatch == batches[i].name) {
+                    sentBID = batches[i].id;
+                }
             }
             //console.log(html);
             document.getElementById("batchListCol").innerHTML = html;
@@ -165,12 +173,12 @@ function getBatches() {
             console.log("sent batch is " + sentBatch)
             if (sentBatch !=  null && sentBatch != "") {
                 console.log("doing getStudents for " + sentBatch);
-                getStudents(sentBatch); 
+                getStudents(sentBatch, sentBID); 
             } else {
                 if (batches.length > 0) {
                     $("#studentPane").show();
                     console.log("doing getStudents in else for " + batches[0].name);
-                    getStudents(batches[0].name);
+                    getStudents(batches[0].name, batches[0].id);
                 } else {
                     $("#studentPane").hide();
                 }
@@ -180,6 +188,46 @@ function getBatches() {
     xhr.open("GET", endpoint);
     xhr.send(data);    
 }
+
+function getCourses(batchID) {
+    var data = null;
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            courses = (JSON.parse(this.responseText)).response;
+            console.log("these are the courses " + courses)
+            chtml = "";
+            for (i = 0; i < courses.length; i++) {
+                chtml += "<div id='course" + courses[i].id + "' class='row courserow'><div class='col-sm-11 course'>" + courses[i].name + "</div><div class='col-sm-1 coursedel' onclick='deleteCourse(" + courses[i].id + ")' style='text-align:center'><span class='glyphicon glyphicon-trash'></span></div></div>"
+            }
+            document.getElementById("courseList").innerHTML = chtml;
+        }
+    });
+
+    xhr.open("GET", "/services/getCourses?bid=" + batchID);
+
+    xhr.send(data);
+}
+
+function deleteCourse(courseID) {
+    var data = null;
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            $("#course" + courseID).fadeOut();
+        }
+    });
+
+    xhr.open("GET", "/services/deleteCourse?cid=" + courseID);
+    xhr.send(data);
+}
+
 
 $("#studentDetails").hide();
 getBatches();

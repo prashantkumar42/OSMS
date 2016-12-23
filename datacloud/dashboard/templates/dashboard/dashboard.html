@@ -486,6 +486,7 @@
                         <form action="../services/addCourse" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="bid" id="acbatch">
+                            <input type="hidden" name="bname" id="acbatchname">
                             <div class="form-group">
                                 <label class="sr-only" for="course">Course</label>
                                 <div class="input-group">
@@ -498,14 +499,7 @@
                         <hr>
                         <h5 class="muli modal-title"><b>Courses in Curriculum</b></h5><br> 
                         <div id="courseList">
-                            <div class="row courserow">
-                                <div class="col-sm-11 course">Politics</div>
-                                <div class="col-sm-1 coursedel" style="text-align:center"><span class="glyphicon glyphicon-trash"></span></div>
-                            </div>
-                            <div class="row courserow">
-                                <div class="col-sm-11 course">Economics</div>
-                                <div class="col-sm-1 coursedel" style="text-align:center"><span class="glyphicon glyphicon-trash"></span></div>
-                            </div>
+
                         </div>
                         <br>
                     </div>
@@ -520,7 +514,6 @@
         </script>
         <script src="{% static 'scripts/jquery.js' %}" ></script>
         <script src="{% static 'scripts/address.js' %}" ></script>
-        
         <script src="{% static 'scripts/dashboard.js' %}" ></script>
         <script src="{% static 'scripts/search.js' %}" ></script>
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>

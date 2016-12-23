@@ -31,7 +31,7 @@ class Fee(models.Model):
 	def __str__(self):
 		return str(studentId)
 
-class Courses(models.Model):
+class Course(models.Model):
 	name = models.CharField(max_length=255)
 	batch = models.IntegerField()
 

@@ -234,3 +234,41 @@ def search(request):
         return JsonResponse({'response':students})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+
+def addCourse(request):
+    batchid = request.POST["bid"]
+    rbatch = request.POST["bname"]
+    acourse = request.POST["course"]
+    # Validate the data recieved
+    validated = False
+    if batchid and acourse:
+        validated = True 
+
+    if validated and request.user.is_authenticated:      
+        course = models.Course(
+            name = acourse,
+            batch = batchid
+        )
+        course.save()
+
+    return redirect('../dashboard/?batch=' + rbatch)
+
+def getCourses(request):
+    bid = request.GET.get('bid')
+    if request.user.is_authenticated:
+        array = models.Course.objects.filter(batch=bid)
+        courses = []
+        for a in array:
+            courses.insert(len(courses), {"id":a.id, "name":a.name})
+        courses.sort(key=lambda k: k["name"], reverse=False)
+        return JsonResponse({'response':courses})
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def deleteCourse(request):
+    cid = request.GET.get('cid')
+    if request.user.is_authenticated:
+        models.Course.objects.filter(id=cid).delete()
+        return HttpResponse("Done")
+    return HttpResponse("invalid request, either you are not authorized or request was malformed")
