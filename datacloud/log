@@ -1,3 +1,21 @@
+commit f8742b4adb1832b61d3d770d521a4cdf93bed675
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Fri Dec 23 13:19:21 2016 +0530
+
+    finished add and course delete
+
+commit 6d72708583aa363de8b5836831186b046908916b
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Fri Dec 23 02:08:46 2016 +0530
+
+    added he course dialog
+
+commit 6ab952d5428a86dfbee45c3fc22971f853a1567e
+Author: Pranshu Gupta <Pranshu Gupta>
+Date:   Fri Dec 23 00:40:57 2016 +0530
+
+    version 1.2.1, finished search, started acads
+
 commit 9ff1d901d930fe6f5d83bebe73483ca61aa14d6f
 Author: Pranshu Gupta <Pranshu Gupta>
 Date:   Fri Dec 23 00:35:24 2016 +0530
