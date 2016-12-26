@@ -173,3 +173,8 @@ a:hover {
   max-height: 52vh;
   overflow-y: auto;
 }
+
+#courseListForGrading {
+  max-height: 55vh;
+  overflow-y: auto;
+}

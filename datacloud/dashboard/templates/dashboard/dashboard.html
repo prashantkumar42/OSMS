@@ -521,30 +521,22 @@
                             </div>
                         </div>
                         <div id="courseListForGrading">
-                            
+
                         </div>
-                        <!--<div class='row courserow'>
-                            <div class='col-sm-10'>
-                                <div style="padding:1%">
-                                    Maths
-                                </div>
+                        <form action="../services/addGrades" method="POST" style="padding-left:2%">
+                            {% csrf_token %}
+                            <input type="hidden" id="sidforgrade" name="sidforgrade">
+                            <input type="hidden" id="bidforgrade" name="bidforgrade">
+                            <div id="courseListForGradeSubmission">
+                                
+                            </div><hr>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="isgradelock">Lock
+                                </label>
                             </div>
-                            <div class="col-sm-2 grade" style="text-align:center">
-                                <div id="gradeFor1" style="padding:8%;cursor:pointer" onclick="toggleGradeOptions(1)">
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                </div>
-                                <div id="gradeOptions1" style="display:none">
-                                    <br>
-                                    <div onclick="assignGrade(1, 'A')" class="gradeOption">A</div>
-                                    <div onclick="assignGrade(1, 'B')" class="gradeOption">B</div>
-                                    <div onclick="assignGrade(1, 'C')" class="gradeOption">C</div>
-                                    <div onclick="assignGrade(1, 'D')" class="gradeOption">D</div>
-                                    <div onclick="assignGrade(1, 'E')" class="gradeOption">E</div>
-                                    <div onclick="assignGrade(1, 'F')" class="gradeOption">F</div>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>-->
+                            <button type="submit" class="btn btn-primary">SUBMIT GRADES</button>
+                        </form>
                     </div>
                 </div>
             </div>            

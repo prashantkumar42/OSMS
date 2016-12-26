@@ -73,7 +73,7 @@ function viewDetails(std) {
         document.getElementById("amount").value = std.amount;
         document.getElementById("paid").value = std.paid;
     }
-    console.log(document.getElementById("studentDetails").innerHTML)
+    //console.log(document.getElementById("studentDetails").innerHTML)
 }
 
 function updateFee() {
@@ -235,6 +235,7 @@ function toggleGradeOptions(cid) {
 
 function assignGrade(cid, grade) {
     document.getElementById("gradeFor"+cid).innerHTML = grade;
+    document.getElementById("grading"+cid).value = cid + "_" + grade; 
     $("#gradeOptions" + cid).slideUp(); 
 }
 
@@ -249,10 +250,16 @@ function grader(sid, bid) {
             courses = (JSON.parse(this.responseText)).response;
             console.log("these are the courses " + courses)
             chtml = "";
+            fhtml = "<input type='hidden' name='numberofcourses' value=" + courses.length + ">";
             for (i = 0; i < courses.length; i++) {
-                chtml += "<div class='row courserow'><div class='col-sm-10'><div style='padding:1%'>" + courses[i].name + "</div></div><div class='col-sm-2 grade' style='text-align:center'><div id='gradeFor" + courses[i].id + "' style='padding:8%;cursor:pointer' onclick='toggleGradeOptions(" + courses[i].id + ")'><span class='glyphicon glyphicon-chevron-down'></span></div><div id='gradeOptions" + courses[i].id + "' style='display:none'><br><div onclick='assignGrade(" + courses[i].id + ", \"A\")' class='gradeOption'>A</div><div onclick='assignGrade(" + courses[i].id + ", \"B\")' class='gradeOption'>B</div><div onclick='assignGrade(" + courses[i].id + ", \"C\")' class='gradeOption'>C</div><div onclick='assignGrade(" + courses[i].id + ", \"D\")' class='gradeOption'>D</div><div onclick='assignGrade(" + courses[i].id + ", \"E\")' class='gradeOption'>E</div><div onclick='assignGrade(" + courses[i].id + ", \"F\")' class='gradeOption'>F</div><br></div></div></div>"
+                chtml += "<div class='row courserow'><div class='col-sm-10'><div style='padding:1%'>" + courses[i].name + "</div></div><div class='col-sm-2 grade' style='text-align:center'><div id='gradeFor" + courses[i].id + "' style='padding:8%;cursor:pointer' onclick='toggleGradeOptions(" + courses[i].id + ")'><span class='glyphicon glyphicon-chevron-down'></span></div><div id='gradeOptions" + courses[i].id + "' style='display:none'><br><div onclick='assignGrade(" + courses[i].id + ", \"A\")' class='gradeOption'>A</div><div onclick='assignGrade(" + courses[i].id + ", \"B\")' class='gradeOption'>B</div><div onclick='assignGrade(" + courses[i].id + ", \"C\")' class='gradeOption'>C</div><div onclick='assignGrade(" + courses[i].id + ", \"D\")' class='gradeOption'>D</div><div onclick='assignGrade(" + courses[i].id + ", \"E\")' class='gradeOption'>E</div><div onclick='assignGrade(" + courses[i].id + ", \"F\")' class='gradeOption'>F</div><br></div></div></div>";
+
+                fhtml += "<input type='hidden' id='grading" + courses[i].id + "' name='grading" + i + "' value=''>";
             }
             document.getElementById("courseListForGrading").innerHTML = chtml;
+            document.getElementById("courseListForGradeSubmission").innerHTML = fhtml;
+            document.getElementById("sidforgrade").value = sid; 
+            document.getElementById("bidforgrade").value = bid; 
         }
     });
 
