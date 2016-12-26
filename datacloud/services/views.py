@@ -12,15 +12,15 @@ def api(request):
         # Create and send a JSON response
         kwargs = {"name":rbatch}
         batch = models.Batch.objects.get(**kwargs)
-        print("getting all student for " + rbatch)
+        # print("getting all student for " + rbatch)
         array = models.Student.objects.filter(batch=batch.id)
         students = []
         for a in array:
             fee = models.Fee.objects.filter(studentId=a.id)
             if len(fee):
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.id, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
             else:
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "age":a.age, "fee":"N"}
+                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.id, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})

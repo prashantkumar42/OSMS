@@ -156,6 +156,19 @@ a:hover {
   cursor: pointer;
 }
 
+.grade:hover {
+  background-color: #222;
+  color: white;
+}
+.gradeOption {
+  padding: 8%;
+}
+.gradeOption:hover {
+  color: gold;
+  cursor: pointer;
+  background-color: #666;
+}
+
 #courseList {
   max-height: 52vh;
   overflow-y: auto;

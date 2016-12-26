@@ -17,7 +17,7 @@ function viewDetails(std) {
     }
     highlightedSTD = std.id;
     // create the update and delete buttons
-    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' data-target='#studentFee'>MANAGE FEES</button> <button class='muli btn btn-success' data-toggle='modal' data-target='#managegrades'>MANAGE GRADES</button> <button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
+    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' data-target='#studentFee'>MANAGE FEES</button> <button class='muli btn btn-success' data-toggle='modal' onclick='grader(" + std.id + ", " + std.bid + ")' data-target='#managegrades'>MANAGE GRADES</button> <button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
     btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
     document.getElementById("deleteStudentButton").innerHTML = btnDelHTML;
     document.getElementById("udbuttons").innerHTML = btnHTML;
@@ -226,6 +226,39 @@ function deleteCourse(courseID) {
 
     xhr.open("GET", "/services/deleteCourse?cid=" + courseID);
     xhr.send(data);
+}
+
+
+function toggleGradeOptions(cid) {
+   $("#gradeOptions" + cid).slideToggle(); 
+}
+
+function assignGrade(cid, grade) {
+    document.getElementById("gradeFor"+cid).innerHTML = grade;
+    $("#gradeOptions" + cid).slideUp(); 
+}
+
+function grader(sid, bid) {
+    var data = null;
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            courses = (JSON.parse(this.responseText)).response;
+            console.log("these are the courses " + courses)
+            chtml = "";
+            for (i = 0; i < courses.length; i++) {
+                chtml += "<div class='row courserow'><div class='col-sm-10'><div style='padding:1%'>" + courses[i].name + "</div></div><div class='col-sm-2 grade' style='text-align:center'><div id='gradeFor" + courses[i].id + "' style='padding:8%;cursor:pointer' onclick='toggleGradeOptions(" + courses[i].id + ")'><span class='glyphicon glyphicon-chevron-down'></span></div><div id='gradeOptions" + courses[i].id + "' style='display:none'><br><div onclick='assignGrade(" + courses[i].id + ", \"A\")' class='gradeOption'>A</div><div onclick='assignGrade(" + courses[i].id + ", \"B\")' class='gradeOption'>B</div><div onclick='assignGrade(" + courses[i].id + ", \"C\")' class='gradeOption'>C</div><div onclick='assignGrade(" + courses[i].id + ", \"D\")' class='gradeOption'>D</div><div onclick='assignGrade(" + courses[i].id + ", \"E\")' class='gradeOption'>E</div><div onclick='assignGrade(" + courses[i].id + ", \"F\")' class='gradeOption'>F</div><br></div></div></div>"
+            }
+            document.getElementById("courseListForGrading").innerHTML = chtml;
+        }
+    });
+
+    xhr.open("GET", "/services/getCourses?bid=" + bid);
+
+    xhr.send(data);    
 }
 
 
