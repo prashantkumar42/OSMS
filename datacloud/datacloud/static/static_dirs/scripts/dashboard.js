@@ -244,7 +244,7 @@ function grader(sid, bid) {
 
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
+    document.getElementById("gradeStudent").innerHTML = document.getElementById("student"+sid).innerHTML;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             courses = (JSON.parse(this.responseText)).response;

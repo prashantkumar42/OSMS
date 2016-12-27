@@ -273,3 +273,26 @@ def deleteCourse(request):
         models.Course.objects.filter(id=cid).delete()
         return HttpResponse("Done")
     return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def addGrades(request):
+    if request.user.is_authenticated:
+        sid = int(request.POST["sidforgrade"])
+        n = int(request.POST["numberofcourses"])
+        for i in range(0,n):
+            grades = (request.POST["grading"+str(i)]).split('_')
+            cid, lettergrade = int(grades[0]), grades[1]
+            grade = models.Grades(
+                studentId = sid,
+                courseID = cid,
+                letterGrade = lettergrade        
+            )
+            grade.save()            
+        return HttpResponse("Done")
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def getGrades(request):
+    if request.user.is_authenticated:          
+        return HttpResponse("Done")
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")    
