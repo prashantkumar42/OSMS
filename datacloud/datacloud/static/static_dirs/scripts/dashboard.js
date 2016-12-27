@@ -239,6 +239,26 @@ function assignGrade(cid, grade) {
     $("#gradeOptions" + cid).slideUp(); 
 }
 
+function getGrades(sid, cjs) {
+    var data = null;
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    document.getElementById("gradeStudent").innerHTML = document.getElementById("student"+sid).innerHTML;
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            grades = (JSON.parse(this.responseText)).response;
+            for (i = 0; i < grades.length; i++) {
+                assignGrade(grades[i].cid, grades[i].grade);
+            }
+        }
+    });
+
+    xhr.open("GET", "/services/getGrades?sid=" + sid + "&cjson=" + cjs);
+
+    xhr.send(data);  
+}
+
 function grader(sid, bid) {
     var data = null;
 
@@ -251,15 +271,23 @@ function grader(sid, bid) {
             console.log("these are the courses " + courses)
             chtml = "";
             fhtml = "<input type='hidden' name='numberofcourses' value=" + courses.length + ">";
+            cjs = "[";
             for (i = 0; i < courses.length; i++) {
+                cjs += courses[i].id + ","
+
                 chtml += "<div class='row courserow'><div class='col-sm-10'><div style='padding:1%'>" + courses[i].name + "</div></div><div class='col-sm-2 grade' style='text-align:center'><div id='gradeFor" + courses[i].id + "' style='padding:8%;cursor:pointer' onclick='toggleGradeOptions(" + courses[i].id + ")'><span class='glyphicon glyphicon-chevron-down'></span></div><div id='gradeOptions" + courses[i].id + "' style='display:none'><div onclick='assignGrade(" + courses[i].id + ", \"A\")' class='gradeOption'>A</div><div onclick='assignGrade(" + courses[i].id + ", \"B\")' class='gradeOption'>B</div><div onclick='assignGrade(" + courses[i].id + ", \"C\")' class='gradeOption'>C</div><div onclick='assignGrade(" + courses[i].id + ", \"D\")' class='gradeOption'>D</div><div onclick='assignGrade(" + courses[i].id + ", \"E\")' class='gradeOption'>E</div><div onclick='assignGrade(" + courses[i].id + ", \"F\")' class='gradeOption'>F</div><br></div></div></div>";
 
                 fhtml += "<input type='hidden' id='grading" + courses[i].id + "' name='grading" + i + "' value=''>";
             }
+            cjs += "0]"
             document.getElementById("courseListForGrading").innerHTML = chtml;
             document.getElementById("courseListForGradeSubmission").innerHTML = fhtml;
             document.getElementById("sidforgrade").value = sid; 
-            document.getElementById("bidforgrade").value = bid; 
+            document.getElementById("bidforgrade").value = bid;
+
+            // If grades are already assigned then retreive them
+            getGrades(sid, cjs);
+
         }
     });
 

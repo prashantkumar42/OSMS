@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
+from django.db.models import Q
 from . import models
 import json
 
@@ -276,23 +277,37 @@ def deleteCourse(request):
 
 def addGrades(request):
     if request.user.is_authenticated:
+        bid = int(request.POST["bidforgrade"])
+        rbatch = (models.Batch.objects.get(id=bid)).name
         sid = int(request.POST["sidforgrade"])
         n = int(request.POST["numberofcourses"])
         for i in range(0,n):
             grades = (request.POST["grading"+str(i)]).split('_')
             cid, lettergrade = int(grades[0]), grades[1]
+            models.Grades.objects.filter(studentId=sid).filter(courseID=cid).delete()
             grade = models.Grades(
                 studentId = sid,
                 courseID = cid,
                 letterGrade = lettergrade        
             )
             grade.save()            
-        return HttpResponse("Done")
+        return redirect('../dashboard/?batch=' + rbatch)
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
 
 def getGrades(request):
-    if request.user.is_authenticated:          
-        return HttpResponse("Done")
+    if request.user.is_authenticated:
+        sid = request.GET.get('sid')
+        courses = json.loads(request.GET.get('cjson'))
+        
+        query = Q()
+        for cid in courses:
+            query = query | Q(courseID=cid)
+        array = models.Grades.objects.filter(studentId=sid).filter(query)
+        
+        response = []
+        for a in array:
+            response.insert(len(response), {"sid":a.studentId, "cid":a.courseID, "grade":a.letterGrade})
+        return JsonResponse({'response':response})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")    
