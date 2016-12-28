@@ -86,9 +86,12 @@ function getStudents(batchName, batchID) {
     //console.log(batchName)
     $("#batchContent").show();
     $("#searchContent").hide();
+    $("#analyticsContent").hide();
+    $("#chartsPane").hide();
+    $("#studentContent").show();
     document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
     document.getElementById("search").style = "";
-
+    document.getElementById("analytics").style = "";
     endpoint = "/services/api?batch=" + batchName;
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
    

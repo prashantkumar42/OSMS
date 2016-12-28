@@ -24,7 +24,7 @@
                 <div class="row" style="margin-top:1.4%" id="search" onclick="activateSearch()">
                     Search
                 </div>
-                <div class="row" id="grades">
+                <div class="row" id="analytics" onclick="activateAnalytics()">
                     Analytics
                 </div>
                 <div data-toggle="modal" data-target="#aboutModal" class="row" id="about">
@@ -129,6 +129,23 @@
                     </div>
                 </div>
             </div>
+
+            <div id="analyticsContent" style="display:none">
+                <div class="col-sm-3 muli" id="panel4">
+                    <div class="row chartName" style="background-color: goldenrod">
+                        AVAILABLE CHARTS
+                    </div>
+                </div>
+            </div>
+            <div id="chartsPane" style="display:none">
+                <div class="col-sm-7" id="panel3">
+                    <div class="row muli pull-right" style="padding:1%;padding-right:3%">
+                        {{username}} <a href="logout/">sign out</a>
+                    </div>
+                    <div class="row" id="br1"></div>
+                </div>                
+            </div>
+
             <div id="studentContent">
                 <div class="col-sm-7" id="panel3">
                     <div class="row muli pull-right" style="padding:1%;padding-right:3%">
@@ -546,6 +563,7 @@
         <script src="{% static 'scripts/address.js' %}" ></script>
         <script src="{% static 'scripts/dashboard.js' %}" ></script>
         <script src="{% static 'scripts/search.js' %}" ></script>
+        <script src="{% static 'scripts/analytics.js' %}" ></script>
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
 	</body>
 </html>

@@ -8,7 +8,14 @@ function activateSearch() {
     $("#batchContent").hide();
     document.getElementById("studentList").innerHTML = "";
     $("#searchContent").show();
-    $("#studentDetails").hide()
+    $("#studentDetails").hide();
+    
+    document.getElementById("analytics").style = "";
+    $("#chartsPane").hide();
+    $("#analyticsContent").hide();    
+
+    $("#studentContent").show();
+
     document.getElementById(highlightedBatch).style = "";
     document.getElementById("search").style = "background-color:darkgreen";
     if (isbatch == 1) {
