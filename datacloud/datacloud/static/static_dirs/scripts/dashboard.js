@@ -92,7 +92,7 @@ function getStudents(batchName, batchID) {
     document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
     document.getElementById("search").style = "";
     document.getElementById("analytics").style = "";
-    endpoint = "/services/api?batch=" + batchName;
+    endpoint = "/services/api?batch=" + batchID;
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
    
     document.getElementById(batchName).style = "background-color:#666";
@@ -155,17 +155,17 @@ function getBatches() {
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            var sentBID;
+            var sentBatchName;
             console.log(this.responseText);
             batches = (JSON.parse(this.responseText)).response;
             //console.log(students);
             html = ""; ddhtml = "";
             for (i = 0; i < batches.length; i++) {
                 html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +")'>" + batches[i].name + "</div>"; 
-                ddhtml += "<option>" + batches[i].name + "</option>"
+                ddhtml += "<option value=" + batches[i].id + ">" + batches[i].name + "</option>"
                 //console.log(students[i].name);
-                if (sentBatch == batches[i].name) {
-                    sentBID = batches[i].id;
+                if (sentBatch == batches[i].id) {
+                    sentBatchName = batches[i].name;
                 }
             }
             //console.log(html);
@@ -175,8 +175,8 @@ function getBatches() {
             document.getElementById("ubatch").innerHTML = ddhtml;
             console.log("sent batch is " + sentBatch)
             if (sentBatch !=  null && sentBatch != "") {
-                console.log("doing getStudents for " + sentBatch);
-                getStudents(sentBatch, sentBID); 
+                console.log("doing getStudents for " + sentBatchName + " " + sentBatch);
+                getStudents(sentBatchName, sentBatch); 
             } else {
                 if (batches.length > 0) {
                     $("#studentPane").show();
