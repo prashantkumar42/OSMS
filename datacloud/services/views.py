@@ -251,11 +251,11 @@ def addCourse(request):
     if validated and request.user.is_authenticated:      
         course = models.Course(
             name = acourse,
-            batch = batchid
+            batch = models.Batch.objects.get(pk=batchid)
         )
         course.save()
 
-    return redirect('../dashboard/?batch=' + rbatch)
+    return redirect('../dashboard/?batch=' + batchid)
 
 def getCourses(request):
     bid = request.GET.get('bid')
@@ -288,12 +288,12 @@ def addGrades(request):
             cid, lettergrade = int(grades[0]), grades[1]
             models.Grades.objects.filter(studentId=sid).filter(courseID=cid).delete()
             grade = models.Grades(
-                studentId = sid,
+                studentId = models.Student.objects.get(pk=sid),
                 courseID = cid,
                 letterGrade = lettergrade        
             )
             grade.save()            
-        return redirect('../dashboard/?batch=' + rbatch)
+        return redirect('../dashboard/?batch=' + str(bid))
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
 
@@ -305,11 +305,11 @@ def getGrades(request):
         query = Q()
         for cid in courses:
             query = query | Q(courseID=cid)
-        array = models.Grades.objects.filter(studentId=sid).filter(query)
+        array = models.Grades.objects.filter(studentId__id=sid).filter(query)
         
         response = []
         for a in array:
-            response.insert(len(response), {"sid":a.studentId, "cid":a.courseID, "grade":a.letterGrade})
+            response.insert(len(response), {"sid":sid, "cid":a.courseID, "grade":a.letterGrade})
         return JsonResponse({'response':response})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")    
