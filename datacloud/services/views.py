@@ -169,7 +169,7 @@ def studentFee(request):
         validated = True 
 
     if validated and request.user.is_authenticated:
-        fee = models.Fee.objects.filter(studentId=rid).select_related('student')
+        fee = models.Fee.objects.filter(studentId__id=rid)
         if len(fee): 
             fee[0].installments = rinst
             fee[0].amountPerInst = ramnt
@@ -184,7 +184,7 @@ def studentFee(request):
             )
             fee.save()
 
-    return redirect('../dashboard/?batch=' + rbatch)
+    return redirect('../dashboard/?batch=' + bid)
 
 
 def search(request):

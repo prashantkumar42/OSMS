@@ -53,7 +53,7 @@ function viewDetails(std) {
     }
 
     document.getElementById("studentFeeID").value = std.id;
-    document.getElementById("studentFeeBID").value = std.batch;
+    document.getElementById("studentFeeBID").value = std.bid;
     if (std.fee === "N") {
         $("#undefined").slideDown();
         $("#updateFeeLabel").hide();
