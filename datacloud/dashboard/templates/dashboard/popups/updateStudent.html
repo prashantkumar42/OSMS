@@ -1,0 +1,80 @@
+<div class="modal fade" role="dialog" id="updateStudent">
+    <div class="modal-dialog" style="border-radius: 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="muli modal-title">Update Student</h4>
+            </div>
+            <div class="modal-body">
+                <form action="../services/stdupdate" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" id="uid">
+                    <div class="form-group">
+                        <label class="sr-only" for="name">Name</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Name</div>
+                            <input type="text" class="form-control" name="name" id="uname" placeholder="Enter Student Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="father">Father</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Father</div>
+                            <input type="text" class="form-control" name="father" id="ufather" placeholder="Enter Father's Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="mother">Mother</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Mother</div>
+                            <input type="text" class="form-control" name="mother" id="umother" placeholder="Enter Mother's Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="ugender">Gender</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Gender</div>
+                            <select class="form-control" name="gender" id="ugender">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="uage">Age</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Age</div>
+                            <input type="number" class="form-control" name="age" id="uage" placeholder="Enter Age">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="uaddress">Address</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Address</div>
+                            <select class="form-control" name="address" id="uaddress">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="ucontact">Contact</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Contact</div>
+                            <input type="text" class="form-control" id="ucontact" name="contact" placeholder="Enter Mobile Number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="ubatch">Batch</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Batch</div>
+                            <select class="form-control" name="batch" id="ubatch">
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="muli btn btn-primary">Update Student</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
