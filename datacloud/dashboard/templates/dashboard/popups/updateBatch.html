@@ -1,0 +1,24 @@
+<div class="modal fade" role="dialog" id="updateBatch">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="muli modal-title">Update Batch</h4>
+            </div>
+            <div class="modal-body">
+                <form action="../services/updateBatch" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="oname" id="oname">
+                    <div class="form-group">
+                        <label class="sr-only" for="name">Name</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Name</div>
+                            <input type="text" class="form-control" name="name" id="bname" placeholder="Enter Batch Name">
+                        </div>
+                    </div>
+                    <button type="submit" class="muli btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

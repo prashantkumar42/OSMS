@@ -1,0 +1,32 @@
+<div class="modal fade" role="dialog" id="managegrades">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="muli modal-title"><b><span id="gradeStudent"></span></b> - Grade Report</h4>
+            </div>
+            <div class="muli modal-body">
+                <div class="row courserow">
+                    <div class='col-sm-10 course' style='background-color:white'>
+                        <h5><b>Course</b></h5>
+                    </div>
+                    <div class='col-sm-2 course' style='text-align:center;background-color:white'>
+                        <h5><b>Grade</b></h5>
+                    </div>
+                </div>
+                <div id="courseListForGrading">
+
+                </div>
+                <form action="../services/addGrades" method="POST" style="padding-left:2%">
+                    {% csrf_token %}
+                    <input type="hidden" id="sidforgrade" name="sidforgrade">
+                    <input type="hidden" id="bidforgrade" name="bidforgrade">
+                    <div id="courseListForGradeSubmission">
+
+                    </div><hr>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

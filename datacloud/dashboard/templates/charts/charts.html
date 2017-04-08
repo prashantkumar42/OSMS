@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>charts</title>
+</head>
+
+<!-- External/Library Scripts -->
+<script src="js/highcharts.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/exporting.js"></script>
+
+<!-- My Scripts -->
+{% static 'scripts/jquery.js' %}
+<script src="{% static 'charts/scripts/num_boys_girls_per_class.js}"></script>
+<script src="/scripts/avg_perf_sub_boys_girls.js"></script>
+<script src="../datacloud/datacloud/static/static_dirs/charts/scripts/participation_extra_curric.js"></script>
+
+<body>
+    <center>
+        <form id="chartForm" onsubmit="getChartNum()">
+            <input type="text" id="chartNumInput" placeholder="Available Values: 1 to 3"><br><br>
+            <input type="button" value="Display Chart" id="chartNumButton" onclick="getChartNum()"><br>
+            <br><br>
+        </form>
+    </center>
+    <div id="chart1"></div>
+    <div id="chart2"></div>
+    <div id="chart3"></div>
+    <div id="chart4"></div>
+    <table cellpadding="20">
+        <tr>
+            <td>
+                <div id="pieGirls"></div>
+            </td>
+            <td>
+                <div id="pieBoys"></div>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+<script>
+    $("#chartNumInput").focus();
+    $("#chartForm").submit(function(e) {
+        e.preventDefault();
+    });
+
+    function getChartNum() {
+        chart_num  = $('#chartNumInput').val();
+        alert("displaying chart number: "+chart_num);
+        display_charts(chart_num);
+    }
+
+    function display_charts(chart_num){
+        $.post("data.php",
+                {
+                    data_num: ""+chart_num
+                },
+                function (data, status) { // data we get here is string
+                    console.log("response: " + data + "\nStatus: " + status);
+                    data_json = JSON.parse(data); // convert the data from string to JSON
+                    //        console.log("data_json: ");
+                    //        console.log(data_json);
+                    //        data_final = $.map(data_json, function (value, index) { // build the needed array of arrays from JSON //            return [[index, value]];
+                    //        });
+                    //        data_final = data_final.map(function (i) {
+                    //            i[0] = "Class" + i[0];
+                    //            return i;
+                    //        })
+                    //        console.log(data_final);
+                    if (chart_num == 1) {
+                        data_final = data_json;
+                        num_boys_girls_per_class("chart1", data_final);
+                    }
+                    else if (chart_num == 2) {
+                        data_final = data_json;
+                        avg_perf_sub_boys_girls("chart2", data_final);
+                    }
+                    else if (chart_num == 3) {
+                        data_final = {Girls: [], Boys: []};
+                        // push categories & % for girls
+                        for(var i=0; i<data_json.Categories.length; i++){
+                            var tmp = {};
+                            if(i==0){
+                                tmp.sliced = true;
+                            }
+                            tmp.name = data_json.Categories[i];
+                            tmp.y = data_json.Girls[i];
+                            data_final.Girls.push(tmp);
+                        }
+                        // push categories & % for boys
+                        for(var i=0; i<data_json.Categories.length; i++){
+                            var tmp = {};
+                            if(i==0){
+                                tmp.sliced = true;
+                            }
+                            tmp.name = data_json.Categories[i];
+                            tmp.y = data_json.Boys[i];
+                            data_final.Boys.push(tmp)
+                        }
+                        console.log(data_final);
+                        participation_extra_curric("pieGirls", data_final.Girls, "Extra Currics: <b>Girls</b>");
+                        participation_extra_curric("pieBoys", data_final.Boys, "Extra Currics: <b>Boys</b>");
+                    }
+                }
+        );
+
+    }
+
+</script>
+</html>
