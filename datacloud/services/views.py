@@ -143,12 +143,12 @@ def stdupdate(request):
         validated = True
 
     if validated and request.user.is_authenticated:
-        batch = models.Batch.objects.get(name=rbatch)
+        batch = models.Batch.objects.get(pk=rbatch)
         student = models.Student.objects.get(id=rid)        
         student.name = rname
         student.father = rfather
         student.mother = rmother
-        student.batch = batch.pk
+        student.batch = batch
         student.age = rage
         student.gender = rgender
         student.address = raddress
