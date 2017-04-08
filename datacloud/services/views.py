@@ -34,7 +34,6 @@ def stddelete(request):
     if request.user.is_authenticated:
         # Delete the student entry with id = sid
         models.Student.objects.filter(id=sid).delete()
-        models.Fee.objects.filter(studentId=sid).delete()
     return redirect('../dashboard/?batch=' + rbatch)
 
 def getBatchNames(request):
@@ -51,6 +50,9 @@ def getBatchNames(request):
 def addBatch(request):
     rname = request.POST["name"]
     validated = False
+    
+    id = None
+
     if rname:
         validated = True    
     
@@ -59,8 +61,9 @@ def addBatch(request):
             name = rname
         )
         batch.save()
+        id = batch.id
     
-    return redirect('../dashboard/?batch=' + rname)
+    return redirect('../dashboard/?batch=' + str(id))
 
 # handle the condition if this batch dne
 def updateBatch(request):
