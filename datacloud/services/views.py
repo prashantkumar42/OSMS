@@ -70,6 +70,9 @@ def updateBatch(request):
     oname = request.POST["oname"]
     rname = request.POST["name"]
     validated = False
+
+    id = None
+
     if rname:
         validated = True    
     
@@ -77,19 +80,17 @@ def updateBatch(request):
         batch = models.Batch.objects.get(name=oname)
         batch.name = rname
         batch.save()
-    
-    return redirect('../dashboard/?batch=' + rname)
+        id = batch.id
+
+    return redirect('../dashboard/?batch=' + str(id))
 
 # handle the condition if this batch dne
 def deleteBatch(request):
-    bName = request.GET.get('batch')
+    bid = request.GET.get('batch')
     if request.user.is_authenticated:
-        bid = (models.Batch.objects.get(name=bName))
-        models.Batch.objects.filter(name=bName).delete()
-        students = models.Student.objects.filter(batch=bid)
-        for std in students:
-            models.Fee.objects.filter(studentId=std).delete()
-        models.Student.objects.filter(batch=bid).delete()
+        batch = models.Batch.objects.filter(pk=bid)
+        if batch:
+            batch.delete()
     return redirect('../dashboard/')
 
 def collect(request):

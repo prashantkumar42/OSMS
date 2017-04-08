@@ -112,7 +112,7 @@ function getStudents(batchName, batchID) {
         }
     }
 
-    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch?batch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
+    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch?batch="+ batchID +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
     document.getElementById("bname").value = batchName;
     document.getElementById("oname").value = batchName;
     document.getElementById("acbatch").value = batchID;
