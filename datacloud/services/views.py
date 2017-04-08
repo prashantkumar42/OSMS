@@ -11,16 +11,14 @@ def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
         # Create and send a JSON response
-        batch = models.Batch.objects.get(pk=rbatch)
-        # print("getting all student for " + rbatch)
-        array = models.Student.objects.filter(batch=batch)
+        array = models.Student.objects.filter(batch__id=rbatch).select_related('batch')
         students = []
         for a in array:
             fee = models.Fee.objects.filter(studentId=a)
             if len(fee):
-                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.pk, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":a.batch.name, "bid":a.batch.id, "address":a.address, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
             else:
-                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.pk, "age":a.age, "fee":"N"}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":a.batch.name, "bid":a.batch.id, "address":a.address, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -171,7 +169,7 @@ def studentFee(request):
         validated = True 
 
     if validated and request.user.is_authenticated:
-        fee = models.Fee.objects.filter(studentId=rid)
+        fee = models.Fee.objects.filter(studentId=rid).select_related('student')
         if len(fee): 
             fee[0].installments = rinst
             fee[0].amountPerInst = ramnt
@@ -179,7 +177,7 @@ def studentFee(request):
             fee[0].save()
         else:       
             fee = models.Fee(
-                studentId = rid,
+                studentId = models.Student.objects.get(pk=rid),
                 installments = rinst,
                 amountPerInst = ramnt,
                 paidInst = rpaid
