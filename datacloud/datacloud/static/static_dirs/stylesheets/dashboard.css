@@ -19,7 +19,15 @@
     height: 100vh;
 }
 
-#panel2 {
+#studentPaneWrapper {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(3, 29, 52);
+    color: #fff;
+    overflow-y: hidden;
+    height: 100vh;
+}
+#searchRegWrapper {
     margin: 0;
     padding: 0;
     background-color: rgb(3, 29, 52);
@@ -28,7 +36,7 @@
     height: 100vh;
 }
 
-#panel4 {
+#chartListWrapper {
     margin: 0;
     padding: 0;
     background-color: goldenrod;

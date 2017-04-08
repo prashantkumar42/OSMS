@@ -312,4 +312,10 @@ def getGrades(request):
             response.insert(len(response), {"sid":sid, "cid":a.courseID, "grade":a.letterGrade})
         return JsonResponse({'response':response})
     else:
-        return HttpResponse("invalid request, either you are not authorized or request was malformed")    
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def getChartsData(request):
+    if request.user.is_authenticated: #if user is authenticated, then only serve the data
+        pass
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
