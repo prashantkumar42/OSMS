@@ -3,7 +3,7 @@ function viewDetails(std) {
     $("#studentDetails").show()
     console.log("viewDetails was called");
     document.getElementById("stdName").innerHTML = std.name;
-    document.getElementById("stdBatch").innerHTML = (std.batch)[0];
+    document.getElementById("stdBatch").innerHTML = (std.batch).toUpperCase();
     document.getElementById("stdContact").innerHTML = std.contact;
     document.getElementById("stdFather").innerHTML = std.father;
     document.getElementById("stdMother").innerHTML = std.mother;
