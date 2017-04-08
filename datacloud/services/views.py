@@ -11,17 +11,16 @@ def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
         # Create and send a JSON response
-        kwargs = {"name":rbatch}
-        batch = models.Batch.objects.get(**kwargs)
+        batch = models.Batch.objects.get(pk=rbatch)
         # print("getting all student for " + rbatch)
-        array = models.Student.objects.filter(batch=batch.id)
+        array = models.Student.objects.filter(batch=batch)
         students = []
         for a in array:
-            fee = models.Fee.objects.filter(studentId=a.id)
+            fee = models.Fee.objects.filter(studentId=a)
             if len(fee):
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.id, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.pk, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
             else:
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.id, "age":a.age, "fee":"N"}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.pk, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -43,7 +42,7 @@ def getBatchNames(request):
         array = models.Batch.objects.all()
         batches = []
         for a in array:
-            batches.insert(len(batches), {"id":a.id, "name":a.name})
+            batches.insert(len(batches), {"id":a.pk, "name":a.name})
         batches.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':batches})
     else:
@@ -82,11 +81,11 @@ def updateBatch(request):
 def deleteBatch(request):
     bName = request.GET.get('batch')
     if request.user.is_authenticated:
-        bid = (models.Batch.objects.get(name=bName)).id
+        bid = (models.Batch.objects.get(name=bName))
         models.Batch.objects.filter(name=bName).delete()
         students = models.Student.objects.filter(batch=bid)
         for std in students:
-            models.Fee.objects.filter(studentId=std.id).delete()
+            models.Fee.objects.filter(studentId=std).delete()
         models.Student.objects.filter(batch=bid).delete()
     return redirect('../dashboard/')
 
@@ -107,13 +106,13 @@ def collect(request):
 
     # Create an entry in the activity table
     if validated and request.user.is_authenticated:
-        batch = models.Batch.objects.get(name=rbatch)
+        batch = models.Batch.objects.get(pk=rbatch)
 
         student = models.Student(
             name = rname,
             father = rfather,
             mother = rmother,
-            batch = batch.id,
+            batch = batch,
             age = rage,
             gender = rgender,
             address = raddress,
@@ -145,7 +144,7 @@ def stdupdate(request):
         student.name = rname
         student.father = rfather
         student.mother = rmother
-        student.batch = batch.id
+        student.batch = batch.pk
         student.age = rage
         student.gender = rgender
         student.address = raddress
@@ -211,7 +210,7 @@ def search(request):
             kwargs['mother__icontains'] = keyword
 
         if isbatch == '1':
-            batchid = (models.Batch.objects.get(name=rbatch)).id
+            batchid = (models.Batch.objects.get(name=rbatch)).pk
             kwargs['batch'] = batchid
         if isgender == '1':
             kwargs['gender'] = gender
@@ -223,14 +222,14 @@ def search(request):
         array = models.Student.objects.filter(**kwargs)
         students = []
         for a in array:
-            fee = models.Fee.objects.filter(studentId=a.id)
+            fee = models.Fee.objects.filter(studentId=a.pk)
             batch = models.Batch.objects.get(id=a.batch)
             if len(fee):
                 if isfee == '1':
                     pass
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":batch.name, "bid":a.batch, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":batch.name, "bid":a.batch, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
             else:
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":batch.name, "bid":a.batch, "age":a.age, "fee":"N"}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":batch.name, "bid":a.batch, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -258,11 +257,12 @@ def addCourse(request):
 
 def getCourses(request):
     bid = request.GET.get('bid')
+    batch = models.Batch.objects.get(pk=bid)
     if request.user.is_authenticated:
-        array = models.Course.objects.filter(batch=bid)
+        array = models.Course.objects.filter(batch=batch)
         courses = []
         for a in array:
-            courses.insert(len(courses), {"id":a.id, "name":a.name})
+            courses.insert(len(courses), {"id":a.pk, "name":a.name})
         courses.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':courses})
     else:
