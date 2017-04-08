@@ -1,11 +1,17 @@
 from django.db import models
 from django.utils import timezone
 
-class Student(models.Model):
+class Batch(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Student(models.Model):
+    name = models.CharField(max_length=255, db_index=True)
     father = models.CharField(max_length=255)
     mother = models.CharField(max_length=255)
-    batch = models.IntegerField()
+    batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
     contact = models.CharField(max_length=255)
     age = models.IntegerField()
     GENDERS = (('M', 'Male'), ('F', 'Female'), ('O', 'Other'))
@@ -16,14 +22,8 @@ class Student(models.Model):
         text = self.name + ", " + self.father + ", " + self.mother + ", " + str(self.batch) + ", " + self.contact + ", " + str(self.age) + ", " + self.gender + ", " + self.address
         return text
 
-class Batch(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
 class Fee(models.Model):
-    studentId = models.IntegerField()
+    studentId = models.ForeignKey(Student, on_delete=models.CASCADE)
     installments = models.IntegerField()
     amountPerInst = models.IntegerField()
     paidInst = models.IntegerField()
@@ -33,13 +33,13 @@ class Fee(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=255)
-    batch = models.IntegerField()
+    batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
 
     def __str__(self):
         return (str(self.batch) + " " + self.name) 
 
 class Grades(models.Model):
-    studentId = models.IntegerField()
+    studentId = models.ForeignKey(Student, on_delete=models.CASCADE)
     courseID = models.IntegerField()
     letterGrade = models.CharField(max_length=1)
 
