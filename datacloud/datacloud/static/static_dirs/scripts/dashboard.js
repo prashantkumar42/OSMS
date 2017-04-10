@@ -3,7 +3,7 @@ function viewDetails(std) {
     $("#studentDetails").show()
     console.log("viewDetails was called");
     document.getElementById("stdName").innerHTML = std.name;
-    document.getElementById("stdBatch").innerHTML = (std.batch)[0];
+    document.getElementById("stdBatch").innerHTML = (std.batch).toUpperCase();
     document.getElementById("stdContact").innerHTML = std.contact;
     document.getElementById("stdFather").innerHTML = std.father;
     document.getElementById("stdMother").innerHTML = std.mother;
@@ -18,7 +18,7 @@ function viewDetails(std) {
     highlightedSTD = std.id;
     // create the update and delete buttons
     btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' data-target='#studentFee'>MANAGE FEES</button> <button class='muli btn btn-success' data-toggle='modal' onclick='grader(" + std.id + ", " + std.bid + ")' data-target='#managegrades'>MANAGE GRADES</button> <button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
-    btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
+    btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.bid + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
     document.getElementById("deleteStudentButton").innerHTML = btnDelHTML;
     document.getElementById("udbuttons").innerHTML = btnHTML;
     
@@ -53,7 +53,7 @@ function viewDetails(std) {
     }
 
     document.getElementById("studentFeeID").value = std.id;
-    document.getElementById("studentFeeBID").value = std.batch;
+    document.getElementById("studentFeeBID").value = std.bid;
     if (std.fee === "N") {
         $("#undefined").slideDown();
         $("#updateFeeLabel").hide();
@@ -92,7 +92,7 @@ function getStudents(batchName, batchID) {
     document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
     document.getElementById("search").style = "";
     document.getElementById("analytics").style = "";
-    endpoint = "/services/api?batch=" + batchName;
+    endpoint = "/services/api?batch=" + batchID;
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
    
     document.getElementById(batchName).style = "background-color:#666";
@@ -112,7 +112,7 @@ function getStudents(batchName, batchID) {
         }
     }
 
-    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch?batch="+ batchName +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
+    document.getElementById("deleteBatchLabel").innerHTML = "<a href='/services/deleteBatch?batch="+ batchID +"' style='color:white'>Yes, I want to delete " + batchName + " batch!</a>"
     document.getElementById("bname").value = batchName;
     document.getElementById("oname").value = batchName;
     document.getElementById("acbatch").value = batchID;
@@ -155,17 +155,17 @@ function getBatches() {
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            var sentBID;
+            var sentBatchName;
             console.log(this.responseText);
             batches = (JSON.parse(this.responseText)).response;
             //console.log(students);
             html = ""; ddhtml = "";
             for (i = 0; i < batches.length; i++) {
                 html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +")'>" + batches[i].name + "</div>"; 
-                ddhtml += "<option>" + batches[i].name + "</option>"
+                ddhtml += "<option value=" + batches[i].id + ">" + batches[i].name + "</option>"
                 //console.log(students[i].name);
-                if (sentBatch == batches[i].name) {
-                    sentBID = batches[i].id;
+                if (sentBatch == batches[i].id) {
+                    sentBatchName = batches[i].name;
                 }
             }
             //console.log(html);
@@ -175,8 +175,8 @@ function getBatches() {
             document.getElementById("ubatch").innerHTML = ddhtml;
             console.log("sent batch is " + sentBatch)
             if (sentBatch !=  null && sentBatch != "") {
-                console.log("doing getStudents for " + sentBatch);
-                getStudents(sentBatch, sentBID); 
+                console.log("doing getStudents for " + sentBatchName + " " + sentBatch);
+                getStudents(sentBatchName, sentBatch); 
             } else {
                 if (batches.length > 0) {
                     $("#studentPane").show();

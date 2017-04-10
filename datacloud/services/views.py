@@ -11,17 +11,14 @@ def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
         # Create and send a JSON response
-        kwargs = {"name":rbatch}
-        batch = models.Batch.objects.get(**kwargs)
-        # print("getting all student for " + rbatch)
-        array = models.Student.objects.filter(batch=batch.id)
+        array = models.Student.objects.filter(batch__id=rbatch).select_related('batch')
         students = []
         for a in array:
-            fee = models.Fee.objects.filter(studentId=a.id)
+            fee = models.Fee.objects.filter(studentId=a)
             if len(fee):
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.id, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":a.batch.name, "bid":a.batch.id, "address":a.address, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
             else:
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":rbatch, "bid":batch.id, "age":a.age, "fee":"N"}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":a.batch.name, "bid":a.batch.id, "address":a.address, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -35,7 +32,6 @@ def stddelete(request):
     if request.user.is_authenticated:
         # Delete the student entry with id = sid
         models.Student.objects.filter(id=sid).delete()
-        models.Fee.objects.filter(studentId=sid).delete()
     return redirect('../dashboard/?batch=' + rbatch)
 
 def getBatchNames(request):
@@ -43,7 +39,7 @@ def getBatchNames(request):
         array = models.Batch.objects.all()
         batches = []
         for a in array:
-            batches.insert(len(batches), {"id":a.id, "name":a.name})
+            batches.insert(len(batches), {"id":a.pk, "name":a.name})
         batches.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':batches})
     else:
@@ -52,6 +48,9 @@ def getBatchNames(request):
 def addBatch(request):
     rname = request.POST["name"]
     validated = False
+    
+    id = None
+
     if rname:
         validated = True    
     
@@ -60,14 +59,18 @@ def addBatch(request):
             name = rname
         )
         batch.save()
+        id = batch.id
     
-    return redirect('../dashboard/?batch=' + rname)
+    return redirect('../dashboard/?batch=' + str(id))
 
 # handle the condition if this batch dne
 def updateBatch(request):
     oname = request.POST["oname"]
     rname = request.POST["name"]
     validated = False
+
+    id = None
+
     if rname:
         validated = True    
     
@@ -75,19 +78,17 @@ def updateBatch(request):
         batch = models.Batch.objects.get(name=oname)
         batch.name = rname
         batch.save()
-    
-    return redirect('../dashboard/?batch=' + rname)
+        id = batch.id
+
+    return redirect('../dashboard/?batch=' + str(id))
 
 # handle the condition if this batch dne
 def deleteBatch(request):
-    bName = request.GET.get('batch')
+    bid = request.GET.get('batch')
     if request.user.is_authenticated:
-        bid = (models.Batch.objects.get(name=bName)).id
-        models.Batch.objects.filter(name=bName).delete()
-        students = models.Student.objects.filter(batch=bid)
-        for std in students:
-            models.Fee.objects.filter(studentId=std.id).delete()
-        models.Student.objects.filter(batch=bid).delete()
+        batch = models.Batch.objects.filter(pk=bid)
+        if batch:
+            batch.delete()
     return redirect('../dashboard/')
 
 def collect(request):
@@ -107,13 +108,13 @@ def collect(request):
 
     # Create an entry in the activity table
     if validated and request.user.is_authenticated:
-        batch = models.Batch.objects.get(name=rbatch)
+        batch = models.Batch.objects.get(pk=rbatch)
 
         student = models.Student(
             name = rname,
             father = rfather,
             mother = rmother,
-            batch = batch.id,
+            batch = batch,
             age = rage,
             gender = rgender,
             address = raddress,
@@ -140,12 +141,12 @@ def stdupdate(request):
         validated = True
 
     if validated and request.user.is_authenticated:
-        batch = models.Batch.objects.get(name=rbatch)
+        batch = models.Batch.objects.get(pk=rbatch)
         student = models.Student.objects.get(id=rid)        
         student.name = rname
         student.father = rfather
         student.mother = rmother
-        student.batch = batch.id
+        student.batch = batch
         student.age = rage
         student.gender = rgender
         student.address = raddress
@@ -168,7 +169,7 @@ def studentFee(request):
         validated = True 
 
     if validated and request.user.is_authenticated:
-        fee = models.Fee.objects.filter(studentId=rid)
+        fee = models.Fee.objects.filter(studentId__id=rid)
         if len(fee): 
             fee[0].installments = rinst
             fee[0].amountPerInst = ramnt
@@ -176,14 +177,14 @@ def studentFee(request):
             fee[0].save()
         else:       
             fee = models.Fee(
-                studentId = rid,
+                studentId = models.Student.objects.get(pk=rid),
                 installments = rinst,
                 amountPerInst = ramnt,
                 paidInst = rpaid
             )
             fee.save()
 
-    return redirect('../dashboard/?batch=' + rbatch)
+    return redirect('../dashboard/?batch=' + bid)
 
 
 def search(request):
@@ -211,26 +212,25 @@ def search(request):
             kwargs['mother__icontains'] = keyword
 
         if isbatch == '1':
-            batchid = (models.Batch.objects.get(name=rbatch)).id
-            kwargs['batch'] = batchid
+            batch = (models.Batch.objects.get(pk=rbatch))
+            kwargs['batch'] = batch
         if isgender == '1':
-            kwargs['gender'] = gender
+            kwargs['gender'] = gender[0]
         if isaddress == '1':
             kwargs['address'] = address
 
     print(kwargs)
     if validated and request.user.is_authenticated:
-        array = models.Student.objects.filter(**kwargs)
+        array = models.Student.objects.filter(**kwargs).select_related('batch')
         students = []
         for a in array:
-            fee = models.Fee.objects.filter(studentId=a.id)
-            batch = models.Batch.objects.get(id=a.batch)
+            fee = models.Fee.objects.filter(studentId=a)
             if len(fee):
                 if isfee == '1':
                     pass
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":batch.name, "bid":a.batch, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":a.batch.name, "bid":a.batch.id, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
             else:
-                student = {"id":a.id, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":batch.name, "bid":a.batch, "age":a.age, "fee":"N"}
+                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "address":a.address, "batch":a.batch.name, "bid":a.batch.id, "age":a.age, "fee":"N"}
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -250,19 +250,20 @@ def addCourse(request):
     if validated and request.user.is_authenticated:      
         course = models.Course(
             name = acourse,
-            batch = batchid
+            batch = models.Batch.objects.get(pk=batchid)
         )
         course.save()
 
-    return redirect('../dashboard/?batch=' + rbatch)
+    return redirect('../dashboard/?batch=' + batchid)
 
 def getCourses(request):
     bid = request.GET.get('bid')
+    batch = models.Batch.objects.get(pk=bid)
     if request.user.is_authenticated:
-        array = models.Course.objects.filter(batch=bid)
+        array = models.Course.objects.filter(batch=batch)
         courses = []
         for a in array:
-            courses.insert(len(courses), {"id":a.id, "name":a.name})
+            courses.insert(len(courses), {"id":a.pk, "name":a.name})
         courses.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':courses})
     else:
@@ -286,12 +287,12 @@ def addGrades(request):
             cid, lettergrade = int(grades[0]), grades[1]
             models.Grades.objects.filter(studentId=sid).filter(courseID=cid).delete()
             grade = models.Grades(
-                studentId = sid,
+                studentId = models.Student.objects.get(pk=sid),
                 courseID = cid,
                 letterGrade = lettergrade        
             )
             grade.save()            
-        return redirect('../dashboard/?batch=' + rbatch)
+        return redirect('../dashboard/?batch=' + str(bid))
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
 
@@ -303,11 +304,17 @@ def getGrades(request):
         query = Q()
         for cid in courses:
             query = query | Q(courseID=cid)
-        array = models.Grades.objects.filter(studentId=sid).filter(query)
+        array = models.Grades.objects.filter(studentId__id=sid).filter(query)
         
         response = []
         for a in array:
-            response.insert(len(response), {"sid":a.studentId, "cid":a.courseID, "grade":a.letterGrade})
+            response.insert(len(response), {"sid":sid, "cid":a.courseID, "grade":a.letterGrade})
         return JsonResponse({'response':response})
     else:
-        return HttpResponse("invalid request, either you are not authorized or request was malformed")    
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def getChartsData(request):
+    if request.user.is_authenticated: #if user is authenticated, then only serve the data
+        pass
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
