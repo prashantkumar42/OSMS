@@ -87,7 +87,7 @@
 }
 
 .chartName {
-  background-color:goldenrod;
+  background-color: darkgoldenrod;
   color: black;
   padding:2%;
   padding-left: 4%;
@@ -96,7 +96,7 @@
 }
 
 .chartName:hover {
-  background-color: darkgoldenrod;
+  background-color: lightgreen;
 }
 
 a:hover {

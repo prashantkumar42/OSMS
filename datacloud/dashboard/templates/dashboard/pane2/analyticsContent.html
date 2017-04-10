@@ -1,7 +1,73 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'stylesheets/awesome-bootstrap-checkbox.css' %}">
+<link rel="stylesheet" href="{% static 'stylesheets/font-awesome.css' %}">
+
 <div id="analyticsContent" style="display:none">
-    <div class="col-sm-2 muli" name="panel4" id="chartListWrapper">
-        <div class="row chartName" style="background-color: goldenrod">
+    <div class="col-sm-2 muli" name="panel4" id="chartListWrapper" >
+        <br>
+        <p style="text-align: center">
             AVAILABLE CHARTS
+        </p>
+        <br>
+        <div class="row chartName" style="padding-bottom: 0px" >
+            <div class="radio" style="background: lightgreen" >
+                <input type="radio" name="radio" id="radio1" onclick="display_charts(1, this) ">
+                <label for="radio1">
+                </label>
+                Students in Class
+            </div>
         </div>
-    </div>
+
+        <div class="row chartName" style="padding-bottom: 0px" >
+            <div class="radio" style="background: lightgreen;">
+                <input type="radio" name="radio" id="radio2" onclick="display_charts(2, this)">
+                <label for="radio2">
+                </label>
+                Avg. Performance
+            </div>
+        </div>
+        <div class="row chartName" style="padding-bottom: 0px" >
+            <div class="radio" style="background: lightgreen">
+                <input type="radio" name="radio" id="radio3" onclick="display_charts(3, this)">
+                <label for="radio3">
+                </label>
+                Co-Currics
+            </div>
+        </div>
+
+        <!--<div class="checkbox checkbox-primary">-->
+            <!--<input id="checkbox2" class="styled" type="checkbox">-->
+            <!--<label for="checkbox2">-->
+                <!--Primary-->
+            <!--</label>-->
+        <!--</div>-->
+        <!--<div class="checkbox checkbox-success">-->
+            <!--<input id="checkbox3" class="styled" type="checkbox">-->
+            <!--<label for="checkbox3">-->
+                <!--Success-->
+            <!--</label>-->
+        <!--</div>-->
+        <!--<div class="checkbox checkbox-info">-->
+            <!--<input id="checkbox4" class="styled" type="checkbox">-->
+            <!--<label for="checkbox4">-->
+                <!--Info-->
+            <!--</label>-->
+        <!--</div>-->
+        <!--<div class="checkbox checkbox-warning">-->
+            <!--<input id="checkbox5" type="checkbox" class="styled">-->
+            <!--<label for="checkbox5">-->
+                <!--Warning-->
+            <!--</label>-->
+        <!--</div>-->
+        <!--<div class="checkbox checkbox-danger">-->
+            <!--<input id="checkbox6" type="checkbox" class="styled">-->
+            <!--<label for="checkbox6">-->
+                <!--Check me out-->
+            <!--</label>-->
+        <!--</div>-->
+        <!--<div class="row chartName">-->
+            <!--Avg. Performance-->
+        <!--</div>-->
+    <!--</div>-->
 </div>

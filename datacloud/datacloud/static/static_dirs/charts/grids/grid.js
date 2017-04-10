@@ -7,7 +7,7 @@
           widget_margins: [5, 5],
           helper: 'clone',
           resize: {
-            enabled: false,
+            enabled: true,
             max_size: [4, 4],
             min_size: [1, 1]
           }
