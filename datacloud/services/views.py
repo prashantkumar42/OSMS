@@ -212,10 +212,10 @@ def search(request):
             kwargs['mother__icontains'] = keyword
 
         if isbatch == '1':
-            batch = (models.Batch.objects.get(name=rbatch))
+            batch = (models.Batch.objects.get(pk=rbatch))
             kwargs['batch'] = batch
         if isgender == '1':
-            kwargs['gender'] = gender
+            kwargs['gender'] = gender[0]
         if isaddress == '1':
             kwargs['address'] = address
 

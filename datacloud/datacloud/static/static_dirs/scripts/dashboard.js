@@ -18,7 +18,7 @@ function viewDetails(std) {
     highlightedSTD = std.id;
     // create the update and delete buttons
     btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' data-target='#studentFee'>MANAGE FEES</button> <button class='muli btn btn-success' data-toggle='modal' onclick='grader(" + std.id + ", " + std.bid + ")' data-target='#managegrades'>MANAGE GRADES</button> <button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
-    btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.batch + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
+    btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.bid + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
     document.getElementById("deleteStudentButton").innerHTML = btnDelHTML;
     document.getElementById("udbuttons").innerHTML = btnHTML;
     
