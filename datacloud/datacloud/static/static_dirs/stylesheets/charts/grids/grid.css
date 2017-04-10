@@ -1,0 +1,9 @@
+.gridster ul {
+  /*list-style: none;*/
+  background-color: gray;
+}
+
+.gridster ul li {
+  background-color: white;
+}
+
