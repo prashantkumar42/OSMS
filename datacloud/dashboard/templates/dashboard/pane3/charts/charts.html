@@ -75,8 +75,7 @@
         display_charts(chart_num);
     }
 
-    function display_charts(chart_num, e){
-        var displayFlag = e.checked;
+    function display_charts(chart_num){
 //        $.post("http://127.0.01:1234/data.php",
         $.post("http://172.24.1.20:1234/data.php",
                 {
@@ -96,28 +95,17 @@
                     //        console.log(data_final);
                     if (chart_num == 1) {
                         $('#chart2').hide();
-                        if(displayFlag){
-                            $('#chart1').show();
-                            data_final = data_json;
-                            num_boys_girls_per_class("chart1", data_final);
-                        }
-                        else{
-                            $('#chart1').hide();
-                        }
+                        $('#chart1').show();
+                        data_final = data_json;
+                        num_boys_girls_per_class("chart1", data_final);
                     }
                     else if (chart_num == 2) {
                         $('#chart2').hide();
-                        if(displayFlag){
-                            $('#chart1').show();
-                            data_final = data_json;
-                            avg_perf_sub_boys_girls("chart1", data_final);
-                        }
-                        else{
-                            $('#chart1').hide();
-                        }
+                        $('#chart1').show();
+                        data_final = data_json;
+                        avg_perf_sub_boys_girls("chart1", data_final);
                     }
                     else if (chart_num == 3) {
-                        $('#chart2').show();
                         data_final = {Girls: [], Boys: []};
                         // push categories & % for girls
                         for(var i=0; i<data_json.Categories.length; i++){
@@ -141,16 +129,10 @@
                         }
                         console.log(data_final);
 
-                        if(displayFlag){
-                            $('#chart1').show();
-                            $('#chart2').show();
-                            participation_extra_curric("chart1", data_final.Girls, "Extra Currics: <b>Girls</b>");
-                            participation_extra_curric("chart2", data_final.Boys, "Extra Currics: <b>Boys</b>");
-                        }
-                        else{
-                            $('#chart1').hide();
-                            $('#chart2').hide();
-                        }
+                        $('#chart1').show();
+                        $('#chart2').show();
+                        participation_extra_curric("chart1", data_final.Girls, "Extra Currics: <b>Girls</b>");
+                        participation_extra_curric("chart2", data_final.Boys, "Extra Currics: <b>Boys</b>");
                     }
                 }
         );
