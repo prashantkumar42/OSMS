@@ -17,7 +17,7 @@ function viewDetails(std) {
     }
     highlightedSTD = std.id;
     // create the update and delete buttons
-    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' data-target='#studentFee'>MANAGE FEES</button> <button class='muli btn btn-success' data-toggle='modal' onclick='grader(" + std.id + ", " + std.bid + ")' data-target='#managegrades'>MANAGE GRADES</button> <button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
+    btnHTML = "<button class='muli btn btn-success' data-toggle='modal' data-target='#updateStudent'>UPDATE INFO</button> <button class='muli btn btn-primary' data-toggle='modal' onclick='getFeeDetails("+ std.id + ")' data-target='#studentFee'>MANAGE FEES</button> <button class='muli btn btn-success' data-toggle='modal' onclick='grader(" + std.id + ", " + std.bid + ")' data-target='#managegrades'>MANAGE GRADES</button> <button class='pull-right muli btn btn-danger' data-toggle='modal' data-target='#deleteStudent'>DEREGISTER</button>"
     btnDelHTML = "<a href='/services/stddelete?sid=" + std.id + "&bid=" + std.bid + "'><button class='muli btn btn-danger'>Yes, deregister this student !</button></a>"
     document.getElementById("deleteStudentButton").innerHTML = btnDelHTML;
     document.getElementById("udbuttons").innerHTML = btnHTML;
@@ -78,6 +78,31 @@ function viewDetails(std) {
 
 function updateFee() {
     $("#undefined").slideToggle();
+}
+
+function getFeeDetails(sid) {
+    endpoint = "/services/getFee?sid=" + sid;
+
+    var data = null;
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            //console.log(this.responseText);
+            fee = (JSON.parse(this.responseText)).response;
+            //console.log(students);
+            if (fee) {
+                document.getElementById("installments1").innerHTML = fee.installments;
+                document.getElementById("amount1").innerHTML = fee.amount;
+                document.getElementById("paid1").innerHTML = fee.paid;
+                document.getElementById("installments").value = fee.installments;
+                document.getElementById("amount").value = fee.amount;
+                document.getElementById("paid").value = fee.paid;
+            }
+        }
+    });
+    xhr.open("GET", endpoint);
+    xhr.send(data);     
 }
 
 function getStudents(batchName, batchID) {
