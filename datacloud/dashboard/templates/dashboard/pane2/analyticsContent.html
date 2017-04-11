@@ -1,26 +1,19 @@
-{% load staticfiles %}
-
-<link rel="stylesheet" href="{% static 'stylesheets/awesome-bootstrap-checkbox.css' %}">
-<link rel="stylesheet" href="{% static 'stylesheets/font-awesome.css' %}">
-
 <div id="analyticsContent" style="display:none">
-    <div class="col-sm-2 muli" name="panel4" id="chartListWrapper" >
-        <br>
-        <p style="text-align: center">
+    <div class="col-sm-3 muli" name="panel4" id="chartListWrapper">
+        <div class="row chartName" style="background-color: goldenrod">
             AVAILABLE CHARTS
-        </p>
-        <br>
+        </div>
         <div class="row chartName" onclick="display_charts(1)" >
                 Students in Class
         </div>
-
         <div class="row chartName" onclick="display_charts(2)" >
-                Avg. Performance
+                Avgerage Performance
         </div>
         <div class="row chartName" onclick="display_charts(3)" >
-                Co-Currics
+                Co-Curricular Activities
         </div>
-
+    </div>
+</div>
         <!--<div class="checkbox checkbox-primary">-->
             <!--<input id="checkbox2" class="styled" type="checkbox">-->
             <!--<label for="checkbox2">-->
@@ -54,5 +47,3 @@
         <!--<div class="row chartName">-->
             <!--Avg. Performance-->
         <!--</div>-->
-    <!--</div>-->
-</div>
