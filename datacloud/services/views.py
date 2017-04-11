@@ -11,14 +11,11 @@ def api(request):
     rbatch = request.GET.get('batch')
     if request.user.is_authenticated:
         # Create and send a JSON response
-        array = models.Student.objects.filter(batch__id=rbatch).select_related('batch')
+        batch = models.Batch.objects.get(pk=rbatch)
+        array = models.Student.objects.filter(batch__id=rbatch)
         students = []
         for a in array:
-            fee = models.Fee.objects.filter(studentId=a)
-            if len(fee):
-                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":a.batch.name, "bid":a.batch.id, "address":a.address, "age":a.age, "fee":"Y", "installments":fee[0].installments, "amount":fee[0].amountPerInst, "paid":fee[0].paidInst}
-            else:
-                student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":a.batch.name, "bid":a.batch.id, "address":a.address, "age":a.age, "fee":"N"}
+            student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":batch.name, "bid":batch.id, "address":a.address, "age":a.age}    
             students.insert(len(students), student)
         students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
@@ -186,6 +183,14 @@ def studentFee(request):
 
     return redirect('../dashboard/?batch=' + bid)
 
+def getFee(request):
+    sid = request.GET.get('sid')
+    if request.user.is_authenticated:
+        fee = models.Fee.objects.all()[0]
+        print(fee)
+        return JsonResponse({'response':fee})
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")    
 
 def search(request):
     # http://127.0.0.1:8000/services/search?keyword=zoobi&isbatch=0&batch=Class%201&isgender=1&gender=Male&isaddress=0&address=hkh&isfee=22

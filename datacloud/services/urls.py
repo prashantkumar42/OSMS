@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'getCourses$', views.getCourses, name='getCourses'),
     url(r'deleteCourse$', views.deleteCourse, name='deleteCourse'),
     url(r'addGrades$', views.addGrades, name='addGrades'),
-    url(r'getGrades$', views.getGrades, name='getGrades')
+    url(r'getGrades$', views.getGrades, name='getGrades'),
+    url(r'getFee$', views.getFee, name='getFee')
 ]
