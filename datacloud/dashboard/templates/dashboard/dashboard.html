@@ -8,8 +8,9 @@
         <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/main.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/dashboard.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'fonts/font.css' %}">
+        <script src="{% static 'scripts/jquery.js' %}" ></script>
 	</head>
-	<body>       
+	<body>
         <div class="row-fluid">
 
             <!-- pane1 included here -->
@@ -41,7 +42,6 @@
             var highlightedBatch;
             var sentBatch = "{{batch}}";
         </script>
-        <script src="{% static 'scripts/jquery.js' %}" ></script>
         <script src="{% static 'scripts/address.js' %}" ></script>
         <script src="{% static 'scripts/dashboard.js' %}" ></script>
         <script src="{% static 'scripts/search.js' %}" ></script>

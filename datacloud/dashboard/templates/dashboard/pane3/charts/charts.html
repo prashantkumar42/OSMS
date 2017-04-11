@@ -1,0 +1,141 @@
+{% load staticfiles %}
+
+<!-- External/Library Scripts -->
+<script src="{% static 'charts/js/highcharts.js' %}"></script>
+<script src="{% static 'charts/js/exporting.js' %}"></script>
+<!--<script src="{ static 'scripts/jquery.js' %}" ></script>-->
+
+<!-- My Scripts -->
+<script src="{% static 'charts/scripts/num_boys_girls_per_class.js' %}"></script>
+<script src="{% static 'charts/scripts/avg_perf_sub_boys_girls.js' %}"></script>
+<script src="{% static 'charts/scripts/participation_extra_curric.js' %}"></script>
+
+
+    <div style="text-align: center;">
+        <input type="text" id="chartNumInput" placeholder="Available Values: 1 to 3"><br><br>
+        <input type="button" value="Display Chart" id="chartNumButton" onclick="getChartNum()"><br>
+        <br><br>
+    </div>
+
+    <div id="chart1"></div>
+    <br>
+    <div id="chart2"></div>
+
+     <!--&lt;!&ndash;Charts Display Area &ndash;&gt;-->
+    <!--<script src="{% static 'charts/grids/jquery.gridster.js' %}"></script>-->
+    <!--<link rel="stylesheet" href="{% static 'stylesheets/charts/grids/jquery.gridster.css' %}">-->
+    <!--<script src="{% static 'charts/grids/grid.js' %}"></script>-->
+
+    <!--<style>-->
+        <!--.gridster li{-->
+            <!--list-style: none;-->
+        <!--}-->
+
+        <!--.red {  background: red; }-->
+        <!--.yellow{  background: yellow; }-->
+        <!--.green {  background: green; }-->
+        <!--.orange {  background: orange; }-->
+    <!--</style>-->
+    <!--<div class="gridster">-->
+        <!--<ul>-->
+            <!--<li class="green" data-row="1" data-col="1" data-sizex="2" data-sizey="1">-->
+                <!--pieGirls-->
+                <!--<div id="pieGirls"></div>-->
+            <!--</li>-->
+            <!--<li class="orange" data-row="1" data-col="4" data-sizex="2" data-sizey="1">-->
+                <!--pieBoys-->
+                <!--<div id="pieBoys"></div>-->
+            <!--</li>-->
+            <!--<li class="red" data-row="2" data-col="1" data-sizex="4" data-sizey="1">-->
+                <!--Chart1-->
+                <!--<div id="chart1"></div>-->
+            <!--</li>-->
+
+            <!--<li class="yellow" data-row="3" data-col="1" data-sizex="4" data-sizey="1">-->
+                <!--Chart2-->
+                <!--<div id="chart2"></div>-->
+            <!--</li>-->
+
+
+        <!--</ul>-->
+    <!--</div>-->
+
+
+
+
+<script>
+    $("#chartNumInput").focus();
+    $("#chartForm").submit(function(e) {
+        e.preventDefault();
+    });
+
+    function getChartNum() {
+        chart_num  = $('#chartNumInput').val();
+//        alert("displaying chart number: "+chart_num);
+        display_charts(chart_num);
+    }
+
+    function display_charts(chart_num){
+//        $.post("http://127.0.01:1234/data.php",
+        $.post("http://172.24.1.20:1234/data.php",
+                {
+                    data_num: ""+chart_num
+                },
+                function (data, status) { // data we get here is string
+                    console.log("response: " + data + "\nStatus: " + status);
+                    data_json = JSON.parse(data); // convert the data from string to JSON
+                    //        console.log("data_json: ");
+                    //        console.log(data_json);
+                    //        data_final = $.map(data_json, function (value, index) { // build the needed array of arrays from JSON //            return [[index, value]];
+                    //        });
+                    //        data_final = data_final.map(function (i) {
+                    //            i[0] = "Class" + i[0];
+                    //            return i;
+                    //        })
+                    //        console.log(data_final);
+                    if (chart_num == 1) {
+                        $('#chart2').hide();
+                        $('#chart1').show();
+                        data_final = data_json;
+                        num_boys_girls_per_class("chart1", data_final);
+                    }
+                    else if (chart_num == 2) {
+                        $('#chart2').hide();
+                        $('#chart1').show();
+                        data_final = data_json;
+                        avg_perf_sub_boys_girls("chart1", data_final);
+                    }
+                    else if (chart_num == 3) {
+                        data_final = {Girls: [], Boys: []};
+                        // push categories & % for girls
+                        for(var i=0; i<data_json.Categories.length; i++){
+                            var tmp = {};
+                            if(i==0){
+                                tmp.sliced = true;
+                            }
+                            tmp.name = data_json.Categories[i];
+                            tmp.y = data_json.Girls[i];
+                            data_final.Girls.push(tmp);
+                        }
+                        // push categories & % for boys
+                        for(var i=0; i<data_json.Categories.length; i++){
+                            var tmp = {};
+                            if(i==0){
+                                tmp.sliced = true;
+                            }
+                            tmp.name = data_json.Categories[i];
+                            tmp.y = data_json.Boys[i];
+                            data_final.Boys.push(tmp)
+                        }
+                        console.log(data_final);
+
+                        $('#chart1').show();
+                        $('#chart2').show();
+                        participation_extra_curric("chart1", data_final.Girls, "Extra Currics: <b>Girls</b>");
+                        participation_extra_curric("chart2", data_final.Boys, "Extra Currics: <b>Boys</b>");
+                    }
+                }
+        );
+
+    }
+</script>
