@@ -8,11 +8,15 @@ import json
 # Create your views here.
 
 def api(request):
+    kwargs = {}
     rbatch = request.GET.get('batch')
+    alpha = request.GET.get('alpha')
     if request.user.is_authenticated:
         # Create and send a JSON response
         batch = models.Batch.objects.get(pk=rbatch)
-        array = models.Student.objects.filter(batch__id=rbatch)
+        kwargs["batch__id"] = rbatch
+        kwargs["name__istartswith"] = alpha
+        array = models.Student.objects.filter(**kwargs)
         students = []
         for a in array:
             student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":batch.name, "bid":batch.id, "address":a.address, "age":a.age}    
@@ -210,11 +214,11 @@ def search(request):
         validated = True
 
         if keytype == "1":
-            kwargs['name__icontains'] = keyword
+            kwargs['name__istartswith'] = keyword
         elif keytype == "2":
-            kwargs['father__icontains'] = keyword
+            kwargs['father__istartswith'] = keyword
         elif keytype == "3":
-            kwargs['mother__icontains'] = keyword
+            kwargs['mother__istartswith'] = keyword
 
         if isbatch == '1':
             batch = (models.Batch.objects.get(pk=rbatch))

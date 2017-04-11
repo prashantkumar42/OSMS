@@ -105,7 +105,7 @@ function getFeeDetails(sid) {
     xhr.send(data);     
 }
 
-function getStudents(batchName, batchID) {
+function getStudents(batchName, batchID, alpha) {
     getCourses(batchID);
 
     //console.log(batchName)
@@ -117,7 +117,7 @@ function getStudents(batchName, batchID) {
     document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
     document.getElementById("search").style = "";
     document.getElementById("analytics").style = "";
-    endpoint = "/services/api?batch=" + batchID;
+    endpoint = "/services/api?batch=" + batchID + "&alpha=" + alpha.toUpperCase();
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
    
     document.getElementById(batchName).style = "background-color:#666";
@@ -186,7 +186,7 @@ function getBatches() {
             //console.log(students);
             html = ""; ddhtml = "";
             for (i = 0; i < batches.length; i++) {
-                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +")'>" + batches[i].name + "</div>"; 
+                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +", \"A\")'>" + batches[i].name + "</div>"; 
                 ddhtml += "<option value=" + batches[i].id + ">" + batches[i].name + "</option>"
                 //console.log(students[i].name);
                 if (sentBatch == batches[i].id) {
@@ -201,12 +201,12 @@ function getBatches() {
             console.log("sent batch is " + sentBatch)
             if (sentBatch !=  null && sentBatch != "") {
                 console.log("doing getStudents for " + sentBatchName + " " + sentBatch);
-                getStudents(sentBatchName, sentBatch); 
+                getStudents(sentBatchName, sentBatch, 'A'); 
             } else {
                 if (batches.length > 0) {
                     $("#studentPane").show();
                     console.log("doing getStudents in else for " + batches[0].name);
-                    getStudents(batches[0].name, batches[0].id);
+                    getStudents(batches[0].name, batches[0].id, 'A');
                 } else {
                     $("#studentPane").hide();
                 }
