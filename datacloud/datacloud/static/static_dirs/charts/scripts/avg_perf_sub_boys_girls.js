@@ -5,7 +5,7 @@ function avg_perf_sub_boys_girls(container_name, data_final) {
                 zoomType: 'x y'
             },
             title: {
-                text: 'Average Performance of ' + data_final.Class
+                text: 'Average Performance'
             },
 
             subtitle: {
@@ -16,7 +16,7 @@ function avg_perf_sub_boys_girls(container_name, data_final) {
                 categories: data_final.Categories,
                 labels: {
                     formatter: function () {
-                        return 'Subject-' + this.value;
+                        return 'Class-' + this.value;
                     }
                 }
             },

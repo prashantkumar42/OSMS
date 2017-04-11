@@ -40,8 +40,8 @@ class Course(models.Model):
 
 class Grades(models.Model):
     studentId = models.ForeignKey(Student, on_delete=models.CASCADE)
-    courseID = models.IntegerField()
-    letterGrade = models.CharField(max_length=1)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
+    letterGrade = models.IntegerField(default=10)
 
     def __str__(self):
-        return (str(self.studentId) + ", " + str(self.courseID) + ": " + self.letterGrade) 
+        return (str(self.studentId) + ", " + str(self.courseID) + ": " + self.letterGrade)
