@@ -41,7 +41,7 @@ for a in b:
     a3 += 1
     ages = [a1, a2, a3]
     studentList = []
-    for i in range(10000):
+    for i in range(100):
         # pick a random gender 
         g = np.random.randint(0, 2)
         # pick random surname and parents' names

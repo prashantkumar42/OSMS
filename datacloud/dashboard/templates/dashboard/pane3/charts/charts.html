@@ -78,7 +78,24 @@
     }
 
     function display_charts(chart_num){
-//        $.post("http://127.0.01:1234/data.php",
+        if (chart_num == 1) {
+            $('#chart2').hide();
+            $('#chart1').show();
+            $.get("http://172.24.1.20:8000/services/chartNumStudents",
+                    function (data, status) { // data we get here is string
+                        console.log("response: " + data + "\nStatus: " + status);
+//                        data_json = JSON.parse(data); // convert the data from string to JSON
+                        data_json = data;
+                        if (chart_num == 1) {
+                            $('#chart2').hide();
+                            $('#chart1').show();
+                            data_final = data_json;
+                            num_boys_girls_per_class("chart1", data_final);
+                        }
+                    }
+            );
+        }
+
         $.post("http://172.24.1.20:1234/data.php",
                 {
                     data_num: ""+chart_num
@@ -86,22 +103,7 @@
                 function (data, status) { // data we get here is string
                     console.log("response: " + data + "\nStatus: " + status);
                     data_json = JSON.parse(data); // convert the data from string to JSON
-                    //        console.log("data_json: ");
-                    //        console.log(data_json);
-                    //        data_final = $.map(data_json, function (value, index) { // build the needed array of arrays from JSON //            return [[index, value]];
-                    //        });
-                    //        data_final = data_final.map(function (i) {
-                    //            i[0] = "Class" + i[0];
-                    //            return i;
-                    //        })
-                    //        console.log(data_final);
-                    if (chart_num == 1) {
-                        $('#chart2').hide();
-                        $('#chart1').show();
-                        data_final = data_json;
-                        num_boys_girls_per_class("chart1", data_final);
-                    }
-                    else if (chart_num == 2) {
+                    if (chart_num == 2) {
                         $('#chart2').hide();
                         $('#chart1').show();
                         data_final = data_json;

@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'deleteCourse$', views.deleteCourse, name='deleteCourse'),
     url(r'addGrades$', views.addGrades, name='addGrades'),
     url(r'getGrades$', views.getGrades, name='getGrades'),
-    url(r'getFee$', views.getFee, name='getFee')
+    url(r'getFee$', views.getFee, name='getFee'),
+    url(r'chartNumStudents$', views.getChartNumStudents, name="chartNumStudents")
 ]

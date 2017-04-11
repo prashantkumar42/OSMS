@@ -5,6 +5,9 @@ from django.db.models import Q
 from . import models
 import json
 
+# import your views here
+# from .charts import views
+
 # Create your views here.
 
 def api(request):
@@ -321,5 +324,30 @@ def getGrades(request):
 def getChartsData(request):
     if request.user.is_authenticated: #if user is authenticated, then only serve the data
         pass
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+
+# Charts Views
+def getChartNumStudents(request):
+    if request.user.is_authenticated:
+        # models.Batch
+        array = models.Batch.objects.all()
+        response = {}
+        batches = []
+        numGirls = []
+        numBoys = []
+        for a in array:
+            batches.append(a.name)
+            students = models.Student.objects.filter(batch__id=a.pk)
+            girls = students.filter(gender='F')
+            boys = students.filter(gender='M')
+            numGirls.append(len(girls))
+            numBoys.append(len(boys))
+
+        response["Categories"] = batches;
+        response["Girls"] = numGirls;
+        response["Boys"] = numBoys;
+        return JsonResponse(response)
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
