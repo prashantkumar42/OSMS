@@ -339,15 +339,37 @@ def getChartNumStudents(request):
         numBoys = []
         for a in array:
             batches.append(a.name)
+            numGirls.append(models.Student.objects.filter(batch__id=a.pk, gender='F').count())
+            numBoys.append(models.Student.objects.filter(batch__id=a.pk, gender='M').count())
+
+        response["Categories"] = batches
+        response["Girls"] = numGirls
+        response["Boys"] = numBoys
+        return JsonResponse(response)
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def getChartAvgPerformance(request):
+    if request.user.is_authenticated:
+        # models.Batch
+        array = models.Batch.objects.all()
+        response = {}
+        batches = []
+        avgGirls = []
+        avgBoys = []
+        for a in array:
+            batches.append(a.name)
             students = models.Student.objects.filter(batch__id=a.pk)
             girls = students.filter(gender='F')
             boys = students.filter(gender='M')
-            numGirls.append(len(girls))
-            numBoys.append(len(boys))
+            avgGirls.append(len(girls))
+            avgBoys.append(len(boys))
 
+        subject = "science"
+        response["Subject"] = subject;
         response["Categories"] = batches;
-        response["Girls"] = numGirls;
-        response["Boys"] = numBoys;
+        response["Girls"] = avgGirls;
+        response["Boys"] = avgBoys;
         return JsonResponse(response)
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")

@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'addGrades$', views.addGrades, name='addGrades'),
     url(r'getGrades$', views.getGrades, name='getGrades'),
     url(r'getFee$', views.getFee, name='getFee'),
-    url(r'chartNumStudents$', views.getChartNumStudents, name="chartNumStudents")
+    url(r'chartNumStudents$', views.getChartNumStudents, name="chartNumStudents"),
+    url(r'chartAvgPerformance$', views.getChartAvgPerformance, name="chartAvgPerformance"),
 ]
