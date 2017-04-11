@@ -105,8 +105,52 @@ function getFeeDetails(sid) {
     xhr.send(data);     
 }
 
+
+function createFilters(batchName, batchID, alpha) {
+    i = 'A';
+
+    ahtml = "<div class='row'>"
+    while( i != 'G') {
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        i = String.fromCharCode(i.charCodeAt(0) + 1)
+    }
+    ahtml += "</div>"
+    
+    ahtml += "<div class='row'>"
+    while( i != 'M') {
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        i = String.fromCharCode(i.charCodeAt(0) + 1)
+    }
+    ahtml += "</div>"
+
+    ahtml += "<div class='row'>"
+    while( i != 'S') {
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        i = String.fromCharCode(i.charCodeAt(0) + 1)
+    }
+    ahtml += "</div>"
+
+    ahtml += "<div class='row'>"
+    while( i != 'Y') {
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        i = String.fromCharCode(i.charCodeAt(0) + 1)
+    }
+    ahtml += "</div>"
+
+    ahtml += "<div class='row'><div class='col-sm-2'></div><div class='col-sm-2'></div>"
+    ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", 'Y')\" class='col-sm-2 letter'>Y</div>"
+    ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", 'Z')\" class='col-sm-2 letter'>Z</div>"
+    ahtml += "<div class='col-sm-2'></div><div class='col-sm-2'></div></div><br>"
+
+    document.getElementById("alphaFilters").innerHTML = ahtml;
+
+}
+
+
 function getStudents(batchName, batchID, alpha) {
     getCourses(batchID);
+    $('#alphaFilters').slideUp();
+    createFilters(batchName, batchID, alpha);
 
     //console.log(batchName)
     $("#batchContent").show();
@@ -324,6 +368,10 @@ function grader(sid, bid) {
     xhr.send(data);    
 }
 
+
+function showAlpha() {
+    $('#alphaFilters').slideToggle();
+}
 
 $("#studentDetails").hide();
 getBatches();

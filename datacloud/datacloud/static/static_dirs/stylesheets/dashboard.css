@@ -71,7 +71,7 @@
 }
 
 #studentList {
-  height: 83vh;
+  height: 78vh;
   overflow-y: auto;  
 }
 
@@ -206,4 +206,22 @@ a:hover {
 #courseListForGrading {
   max-height: 55vh;
   overflow-y: auto;
+}
+
+#alphaFilters {
+  padding:4%;
+  padding-bottom:2%;
+  position:absolute;
+  z-index:1000;
+  width: 100%;
+  background-color: rgb(3, 29, 52);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.letter {
+  padding: 3%;
+  text-align: center;
+}
+.letter:hover {
+  background-color: black;
 }
