@@ -81,7 +81,7 @@
         if (chart_num == 1) {
             $('#chart2').hide();
             $('#chart1').show();
-            $.get("http://172.24.1.20:8000/services/chartNumStudents",
+            $.get("/services/chartNumStudents",
                     function (data, status) { // data we get here is string
                         console.log("response: " + data + "\nStatus: " + status);
 //                        data_json = JSON.parse(data); // convert the data from string to JSON
