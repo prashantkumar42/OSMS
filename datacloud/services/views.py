@@ -14,17 +14,18 @@ def api(request):
     kwargs = {}
     rbatch = request.GET.get('batch')
     alpha = request.GET.get('alpha')
+    page = 0
     if request.user.is_authenticated:
         # Create and send a JSON response
         batch = models.Batch.objects.get(pk=rbatch)
         kwargs["batch__id"] = rbatch
         kwargs["name__istartswith"] = alpha
-        array = models.Student.objects.filter(**kwargs)
+        array = models.Student.objects.filter(**kwargs).order_by('name')[page*1000:(page+1)*1000]
         students = []
         for a in array:
             student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":batch.name, "bid":batch.id, "address":a.address, "age":a.age}    
             students.insert(len(students), student)
-        students.sort(key=lambda k: k["name"], reverse=False)
+        # students.sort(key=lambda k: k["name"], reverse=False)
         return JsonResponse({'response':students})
 
     else:
@@ -173,7 +174,7 @@ def studentFee(request):
         validated = True 
 
     if validated and request.user.is_authenticated:
-        fee = models.Fee.objects.filter(studentId__id=rid)
+        fee = models.Fee.objects.filter(student__id=rid)
         if len(fee): 
             fee[0].installments = rinst
             fee[0].amountPerInst = ramnt
@@ -181,7 +182,7 @@ def studentFee(request):
             fee[0].save()
         else:       
             fee = models.Fee(
-                studentId = models.Student.objects.get(pk=rid),
+                student = models.Student.objects.get(pk=rid),
                 installments = rinst,
                 amountPerInst = ramnt,
                 paidInst = rpaid
@@ -236,7 +237,7 @@ def search(request):
         array = models.Student.objects.filter(**kwargs).select_related('batch')
         students = []
         for a in array:
-            fee = models.Fee.objects.filter(studentId=a)
+            fee = models.Fee.objects.filter(student=a)
             if len(fee):
                 if isfee == '1':
                     pass
@@ -299,15 +300,15 @@ def addGrades(request):
             cid, lettergrade = int(grades[0]), grades[1]
             # convert letter grade to int
             intGrade = (ord('F') - ord(lettergrade))*2
-            grade = models.Grades.objects.filter(studentId=sid).filter(courseID=cid)
+            grade = models.Grades.objects.filter(student_id=sid).filter(course_id=cid)
             if(len(grade)):
-                grade[0].letterGrade = intGrade
+                grade[0].grade = intGrade
                 grade[0].save()
             else:
                 Grade = models.Grades(
-                    studentId = models.Student.objects.get(pk=sid),
-                    courseID = models.Course.objects.get(pk=cid),
-                    letterGrade = intGrade
+                    student = models.Student.objects.get(pk=sid),
+                    course = models.Course.objects.get(pk=cid),
+                    grade = intGrade
                 )
                 Grade.save()
         return redirect('../dashboard/?batch=' + str(bid))
@@ -320,14 +321,14 @@ def getGrades(request):
         courses = json.loads(request.GET.get('cjson'))
         
         query = Q()
-        for cid in courses:
-            query = query | Q(courseID=cid)
-        array = models.Grades.objects.filter(studentId__id=sid).filter(query)
+        for c in courses:
+            query = query | Q(course=c)
+        array = models.Grades.objects.filter(student__id=sid).filter(query)
         
         response = []
         for a in array:
-            letterGrade = chr(ord('F')-(int)(a.letterGrade/2))
-            response.insert(len(response), {"sid":sid, "cid":a.courseID.pk, "grade": letterGrade})
+            grade = chr(ord('F')-(int)(a.grade/2))
+            response.insert(len(response), {"sid":sid, "cid":a.course.pk, "grade": grade})
         return JsonResponse({'response':response})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
@@ -369,7 +370,7 @@ def getChartAvgPerformance(request): # return the average cpi/grade of each batc
             # constructing the OR query to get grades corresponding to the courses of a batch
             query = Q()
             for c in courseArray:
-                query = query | Q(courseID=c)
+                query = query | Q(course=c)
                 # TODO
 
             pass
