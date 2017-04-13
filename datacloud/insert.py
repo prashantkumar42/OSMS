@@ -10,7 +10,7 @@ with open("names.txt") as f:
     for line in f:
         # print(line)
         data = line.split(',')
-        if int(data[2]) >= 100:
+        if int(data[2]) >= 10:
             if data[1] == 'F':
                 names_female.insert(len(names_female), data[0])
             elif data[1] == 'M':

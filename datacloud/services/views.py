@@ -14,7 +14,7 @@ def api(request):
     kwargs = {}
     rbatch = request.GET.get('batch')
     alpha = request.GET.get('alpha')
-    page = 0
+    page = int(request.GET.get('page')) - 1
     if request.user.is_authenticated:
         # Create and send a JSON response
         batch = models.Batch.objects.get(pk=rbatch)

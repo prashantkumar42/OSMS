@@ -111,35 +111,35 @@ function createFilters(batchName, batchID, alpha) {
 
     ahtml = "<div class='row'>"
     while( i != 'G') {
-        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "', 1)\" class='col-sm-2 letter'>"+i+"</div>"
         i = String.fromCharCode(i.charCodeAt(0) + 1)
     }
     ahtml += "</div>"
     
     ahtml += "<div class='row'>"
     while( i != 'M') {
-        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "', 1)\" class='col-sm-2 letter'>"+i+"</div>"
         i = String.fromCharCode(i.charCodeAt(0) + 1)
     }
     ahtml += "</div>"
 
     ahtml += "<div class='row'>"
     while( i != 'S') {
-        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "', 1)\" class='col-sm-2 letter'>"+i+"</div>"
         i = String.fromCharCode(i.charCodeAt(0) + 1)
     }
     ahtml += "</div>"
 
     ahtml += "<div class='row'>"
     while( i != 'Y') {
-        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "')\" class='col-sm-2 letter'>"+i+"</div>"
+        ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", '" + i + "', 1)\" class='col-sm-2 letter'>"+i+"</div>"
         i = String.fromCharCode(i.charCodeAt(0) + 1)
     }
     ahtml += "</div>"
 
     ahtml += "<div class='row'><div class='col-sm-2'></div><div class='col-sm-2'></div>"
-    ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", 'Y')\" class='col-sm-2 letter'>Y</div>"
-    ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", 'Z')\" class='col-sm-2 letter'>Z</div>"
+    ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", 'Y', 1)\" class='col-sm-2 letter'>Y</div>"
+    ahtml += "<div onclick=\"getStudents('"+ batchName +"', " + batchID + ", 'Z', 1)\" class='col-sm-2 letter'>Z</div>"
     ahtml += "<div class='col-sm-2'></div><div class='col-sm-2'></div></div><br>"
 
     document.getElementById("alphaFilters").innerHTML = ahtml;
@@ -147,7 +147,17 @@ function createFilters(batchName, batchID, alpha) {
 }
 
 
-function getStudents(batchName, batchID, alpha) {
+function getStudents(batchName, batchID, alpha, page) {
+    console.log(parseInt(page)-1)
+    
+    if (parseInt(page)-1 > 0) {
+        document.getElementById("prev").innerHTML = "<span onclick='getStudents(\"" + batchName + "\", "+ batchID +", \"" + alpha + "\", " + (parseInt(page)-1).toString() + ")' class='glyphicon glyphicon-chevron-left'></span>"
+    } else {
+        document.getElementById("prev").innerHTML = ""
+    }
+        
+    document.getElementById("next").innerHTML = "<span onclick='getStudents(\"" + batchName + "\", "+ batchID +", \"" + alpha + "\", " + (parseInt(page)+1).toString() + ")' class='glyphicon glyphicon-chevron-right'></span>"
+
     getCourses(batchID);
     $('#alphaFilters').slideUp();
     createFilters(batchName, batchID, alpha);
@@ -161,7 +171,9 @@ function getStudents(batchName, batchID, alpha) {
     document.getElementById("studentSearchResults").innerHTML = "<div class='student' style='background-color:rgb(3,29,52)'>Nothing to show</div>";
     document.getElementById("search").style = "";
     document.getElementById("analytics").style = "";
-    endpoint = "/services/api?batch=" + batchID + "&alpha=" + alpha.toUpperCase();
+    
+    endpoint = "/services/api?batch=" + batchID + "&alpha=" + alpha.toUpperCase() + "&page=" + page;
+    
     document.getElementById("stdlistname").innerText = "STUDENTS IN " + batchName.toUpperCase();
    
     document.getElementById(batchName).style = "background-color:#666";
@@ -230,7 +242,7 @@ function getBatches() {
             //console.log(students);
             html = ""; ddhtml = "";
             for (i = 0; i < batches.length; i++) {
-                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +", \"A\")'>" + batches[i].name + "</div>"; 
+                html += "<div class='row batch' id='" + batches[i].name + "' onclick='getStudents(\"" + batches[i].name + "\", "+ batches[i].id +", \"A\", 1)'>" + batches[i].name + "</div>"; 
                 ddhtml += "<option value=" + batches[i].id + ">" + batches[i].name + "</option>"
                 //console.log(students[i].name);
                 if (sentBatch == batches[i].id) {
@@ -245,12 +257,12 @@ function getBatches() {
             console.log("sent batch is " + sentBatch)
             if (sentBatch !=  null && sentBatch != "") {
                 console.log("doing getStudents for " + sentBatchName + " " + sentBatch);
-                getStudents(sentBatchName, sentBatch, 'A'); 
+                getStudents(sentBatchName, sentBatch, 'A', 1); 
             } else {
                 if (batches.length > 0) {
                     $("#studentPane").show();
                     console.log("doing getStudents in else for " + batches[0].name);
-                    getStudents(batches[0].name, batches[0].id, 'A');
+                    getStudents(batches[0].name, batches[0].id, 'A', 1);
                 } else {
                     $("#studentPane").hide();
                 }
