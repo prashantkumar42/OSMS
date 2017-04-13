@@ -5,7 +5,7 @@ function avg_perf_sub_boys_girls(container_name, data_final) {
                 zoomType: 'x y'
             },
             title: {
-                text: 'Average Performance in '+data_final.Subject
+                text: 'Average Performance'
             },
 
             subtitle: {

@@ -11,7 +11,7 @@ function num_boys_girls_per_class(container_name, data_final) {
                 categories: data_final.Categories,
                 labels: {
                     formatter: function () {
-                        return 'Class-' + this.value;
+                        return this.value;
                     }
                 }
             },

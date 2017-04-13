@@ -5,6 +5,9 @@ from django.db.models import Q
 from . import models
 import json
 
+# import your views here
+# from .charts import views
+
 # Create your views here.
 
 def api(request):
@@ -294,13 +297,19 @@ def addGrades(request):
         for i in range(0,n):
             grades = (request.POST["grading"+str(i)]).split('_')
             cid, lettergrade = int(grades[0]), grades[1]
-            models.Grades.objects.filter(studentId=sid).filter(courseID=cid).delete()
-            grade = models.Grades(
-                studentId = models.Student.objects.get(pk=sid),
-                courseID = cid,
-                letterGrade = lettergrade        
-            )
-            grade.save()            
+            # convert letter grade to int
+            intGrade = (ord('F') - ord(lettergrade))*2
+            grade = models.Grades.objects.filter(studentId=sid).filter(courseID=cid)
+            if(len(grade)):
+                grade[0].letterGrade = intGrade
+                grade[0].save()
+            else:
+                Grade = models.Grades(
+                    studentId = models.Student.objects.get(pk=sid),
+                    courseID = models.Course.objects.get(pk=cid),
+                    letterGrade = intGrade
+                )
+                Grade.save()
         return redirect('../dashboard/?batch=' + str(bid))
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
@@ -317,13 +326,58 @@ def getGrades(request):
         
         response = []
         for a in array:
-            response.insert(len(response), {"sid":sid, "cid":a.courseID, "grade":a.letterGrade})
+            letterGrade = chr(ord('F')-(int)(a.letterGrade/2))
+            response.insert(len(response), {"sid":sid, "cid":a.courseID.pk, "grade": letterGrade})
         return JsonResponse({'response':response})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
 
-def getChartsData(request):
-    if request.user.is_authenticated: #if user is authenticated, then only serve the data
-        pass
+
+# Charts Views
+def getChartNumStudents(request): #return number of Girls & Boys in each Class
+    if request.user.is_authenticated:
+        # models.Batch
+        array = models.Batch.objects.all()
+        response = {}
+        batches = []
+        numGirls = []
+        numBoys = []
+        for a in array:
+            batches.append(a.name)
+            numGirls.append(models.Student.objects.filter(batch__id=a.pk, gender='F').count())
+            numBoys.append(models.Student.objects.filter(batch__id=a.pk, gender='M').count())
+
+        response["Categories"] = batches
+        response["Girls"] = numGirls
+        response["Boys"] = numBoys
+        return JsonResponse(response)
+    else:
+        return HttpResponse("invalid request, either you are not authorized or request was malformed")
+
+def getChartAvgPerformance(request): # return the average cpi/grade of each batch/class
+    if request.user.is_authenticated:
+        # models.Batch
+        response = {}
+        batches = []
+        avgGirls = []
+        avgBoys = []
+
+        batchArray = models.Batch.objects.all()
+        for b in batchArray:
+            batches.append(b.name)
+            courseArray = models.Course.objects.filter(batch__id=b.pk)
+            # constructing the OR query to get grades corresponding to the courses of a batch
+            query = Q()
+            for c in courseArray:
+                query = query | Q(courseID=c)
+                # TODO
+
+            pass
+
+
+        response["Categories"] = batches;
+        response["Girls"] = avgGirls;
+        response["Boys"] = avgBoys;
+        return JsonResponse(response)
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
