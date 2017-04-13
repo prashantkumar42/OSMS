@@ -10,10 +10,11 @@ with open("names.txt") as f:
     for line in f:
         # print(line)
         data = line.split(',')
-        if data[1] == 'F':
-            names_female.insert(len(names_female), data[0])
-        elif data[1] == 'M':
-            names_male.insert(len(names_male), data[0])
+        if int(data[2]) >= 100:
+            if data[1] == 'F':
+                names_female.insert(len(names_female), data[0])
+            elif data[1] == 'M':
+                names_male.insert(len(names_male), data[0])
 
 #print(names_female)
 
@@ -41,7 +42,7 @@ for a in b:
     a3 += 1
     ages = [a1, a2, a3]
     studentList = []
-    for i in range(100):
+    for i in range(50000):
         # pick a random gender 
         g = np.random.randint(0, 2)
         # pick random surname and parents' names
