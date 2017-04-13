@@ -23,7 +23,7 @@ class Student(models.Model):
         return text
 
 class Fee(models.Model):
-    studentId = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     installments = models.IntegerField()
     amountPerInst = models.IntegerField()
     paidInst = models.IntegerField()
@@ -39,9 +39,9 @@ class Course(models.Model):
         return (str(self.batch) + " " + self.name) 
 
 class Grades(models.Model):
-    studentId = models.ForeignKey(Student, on_delete=models.CASCADE)
-    courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
-    letterGrade = models.IntegerField(default=10)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    grade = models.IntegerField(default=10)
 
     def __str__(self):
         return (str(self.studentId) + ", " + str(self.courseID) + ": " + self.letterGrade)
