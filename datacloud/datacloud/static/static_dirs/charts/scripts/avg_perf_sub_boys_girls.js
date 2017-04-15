@@ -1,4 +1,5 @@
 function avg_perf_sub_boys_girls(container_name, data_final) {
+    console.log(data_final);
     Highcharts.chart(container_name, {
             chart: {
                 type: 'line',
@@ -16,7 +17,7 @@ function avg_perf_sub_boys_girls(container_name, data_final) {
                 categories: data_final.Categories,
                 labels: {
                     formatter: function () {
-                        return 'Class-' + this.value;
+                        return this.value;
                     }
                 }
             },
@@ -51,13 +52,17 @@ function avg_perf_sub_boys_girls(container_name, data_final) {
             },
 
             series: [
+                // {
+                //     name: "Girls",
+                //     data: data_final.Girls
+                // },
+                // {
+                //     name: "Boys",
+                //     data: data_final.Boys
+                // },
                 {
-                    name: "Girls",
-                    data: data_final.Girls
-                },
-                {
-                    name: "Boys",
-                    data: data_final.Boys
+                    name: "All",
+                    data: data_final.All
                 },
            ]
 

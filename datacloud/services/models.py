@@ -44,4 +44,4 @@ class Grades(models.Model):
     grade = models.IntegerField(default=10)
 
     def __str__(self):
-        return (str(self.student) + ", " + str(self.course) + ": " + self.grade)
+        return (str(self.student) + ", " + str(self.course) + ": " + str(self.grade))

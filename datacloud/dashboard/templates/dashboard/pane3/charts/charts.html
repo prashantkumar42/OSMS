@@ -86,60 +86,73 @@
                         console.log("response: " + data + "\nStatus: " + status);
 //                        data_json = JSON.parse(data); // convert the data from string to JSON
                         data_json = data;
-                        if (chart_num == 1) {
+                        data_final = data_json;
+                        num_boys_girls_per_class("chart1", data_final);
+                    }
+            );
+        }
+        else if (chart_num == 2) {
+            $('#chart2').hide();
+            $('#chart1').show();
+            $.get("/services/chartAvgPerformance",
+                    function (data, status) { // data we get here is string
+                        console.log("response: " + data + "\nStatus: " + status);
+//                        data_json = JSON.parse(data); // convert the data from string to JSON
+                        data_json = data;
+                        if (chart_num == 2) {
                             $('#chart2').hide();
                             $('#chart1').show();
                             data_final = data_json;
-                            num_boys_girls_per_class("chart1", data_final);
+                            avg_perf_sub_boys_girls("chart1", data_final);
                         }
                     }
             );
         }
 
-        $.post("http://172.24.1.20:1234/data.php",
-                {
-                    data_num: ""+chart_num
-                },
-                function (data, status) { // data we get here is string
-                    console.log("response: " + data + "\nStatus: " + status);
-                    data_json = JSON.parse(data); // convert the data from string to JSON
-                    if (chart_num == 2) {
-                        $('#chart2').hide();
-                        $('#chart1').show();
-                        data_final = data_json;
-                        avg_perf_sub_boys_girls("chart1", data_final);
-                    }
-                    else if (chart_num == 3) {
-                        data_final = {Girls: [], Boys: []};
-                        // push categories & % for girls
-                        for(var i=0; i<data_json.Categories.length; i++){
-                            var tmp = {};
-                            if(i==0){
-                                tmp.sliced = true;
-                            }
-                            tmp.name = data_json.Categories[i];
-                            tmp.y = data_json.Girls[i];
-                            data_final.Girls.push(tmp);
-                        }
-                        // push categories & % for boys
-                        for(var i=0; i<data_json.Categories.length; i++){
-                            var tmp = {};
-                            if(i==0){
-                                tmp.sliced = true;
-                            }
-                            tmp.name = data_json.Categories[i];
-                            tmp.y = data_json.Boys[i];
-                            data_final.Boys.push(tmp)
-                        }
-                        console.log(data_final);
-
-                        $('#chart1').show();
-                        $('#chart2').show();
-                        participation_extra_curric("chart1", data_final.Girls, "Extra Currics: <b>Girls</b>");
-                        participation_extra_curric("chart2", data_final.Boys, "Extra Currics: <b>Boys</b>");
-                    }
-                }
-        );
+//        $.post("http://127.0.0.1:1234/data.php",
+//                {
+//                    data_num: ""+chart_num
+//                },
+//                function (data, status) { // data we get here is string
+//                    console.log("response: " + data + "\nStatus: " + status);
+//                    data_json = JSON.parse(data); // convert the data from string to JSON
+//                    if (chart_num == 2) {
+//                        $('#chart2').hide();
+//                        $('#chart1').show();
+//                        data_final = data_json;
+//                        avg_perf_sub_boys_girls("chart1", data_final);
+//                    }
+//                    else if (chart_num == 3) {
+//                        data_final = {Girls: [], Boys: [], All: []};
+//                        // push categories & % for girls
+//                        for(var i=0; i<data_json.Categories.length; i++){
+//                            var tmp = {};
+//                            if(i==0){
+//                                tmp.sliced = true;
+//                            }
+//                            tmp.name = data_json.Categories[i];
+//                            tmp.y = data_json.Girls[i];
+//                            data_final.Girls.push(tmp);
+//                        }
+//                        // push categories & % for boys
+//                        for(var i=0; i<data_json.Categories.length; i++){
+//                            var tmp = {};
+//                            if(i==0){
+//                                tmp.sliced = true;
+//                            }
+//                            tmp.name = data_json.Categories[i];
+//                            tmp.y = data_json.Boys[i];
+//                            data_final.Boys.push(tmp)
+//                        }
+//                        console.log(data_final);
+//
+//                        $('#chart1').show();
+//                        $('#chart2').show();
+//                        participation_extra_curric("chart1", data_final.Girls, "Extra Currics: <b>Girls</b>");
+//                        participation_extra_curric("chart2", data_final.Boys, "Extra Currics: <b>Boys</b>");
+//                    }
+//                }
+//        );
 
     }
 </script>

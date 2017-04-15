@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.db.models import Q
+from django.db.models import Avg
 from . import models
 import json
 
@@ -323,6 +324,7 @@ def getGrades(request):
         
         query = Q()
         for c in courses:
+            print(c)
             query = query | Q(course=c)
         array = models.Grades.objects.filter(student__id=sid).filter(query)
         
@@ -363,23 +365,35 @@ def getChartAvgPerformance(request): # return the average cpi/grade of each batc
         batches = []
         avgGirls = []
         avgBoys = []
+        avgAllStudents = []
 
         batchArray = models.Batch.objects.all()
         for b in batchArray:
+            # print(b.name)
             batches.append(b.name)
             courseArray = models.Course.objects.filter(batch__id=b.pk)
             # constructing the OR query to get grades corresponding to the courses of a batch
+
             query = Q()
             for c in courseArray:
                 query = query | Q(course=c)
-                # TODO
+            # store average grade of each batch in an array
+            if len(courseArray):
+                avgAllStudents.append(models.Grades.objects.filter(query).aggregate(Avg('grade')))
+                # array = models.Grades.objects.filter(query)
+            else:
+                avgAllStudents.append({'grade__avg': 0})
+                # array =[]
 
-            pass
+        for i in range(len(avgAllStudents)):
+            # print(avgAllStudents[i]['grade__avg'])
+            avgAllStudents[i] = avgAllStudents[i]['grade__avg']*10
+        # print(avgAllStudents)
 
-
-        response["Categories"] = batches;
-        response["Girls"] = avgGirls;
-        response["Boys"] = avgBoys;
+        response["Categories"] = batches
+        response["Girls"] = avgGirls
+        response["Boys"] = avgBoys
+        response["All"] = avgAllStudents
         return JsonResponse(response)
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")
