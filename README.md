@@ -41,3 +41,6 @@ To further improve the performance of our system, we have implemented pagination
 We intend to focus on Analytics and visualization as the next step. The analytics charts involve heavy computation so they currently take 2-3 seconds to load. We wish to optimize that too.
 
 Adding some important features like managing the co-curricular activity data of students and maintaining data related to different academic sessions will also be added.
+
+## Github Repository
+https://github.com/prshntk/OSMS
