@@ -18,6 +18,6 @@ for b in batches:
             tmpGrade = np.random.randint(0, 3)
             g = models.Grades(student=s, course=c, grade=tmpGrade)
             gradeList.append(g)
-
-    # insert grade per batch
+    print(gradeList)
     models.Grades.object.bulk_create(gradeList)
+    # insert grade per batch
