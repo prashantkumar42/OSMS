@@ -194,9 +194,10 @@ def studentFee(request):
 def getFee(request):
     sid = request.GET.get('sid')
     if request.user.is_authenticated:
-        fee = models.Fee.objects.all()[0]
-        print(fee)
-        return JsonResponse({'response':fee})
+        fee = models.Fee.objects.get(student__id=sid)
+        print(fee.installments, fee.amountPerInst, fee.paidInst)
+        fees = {"installments":fee.installments, "amount":fee.amountPerInst, "paid":fee.paidInst}
+        return JsonResponse({'response':fees})
     else:
         return HttpResponse("invalid request, either you are not authorized or request was malformed")    
 

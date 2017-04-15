@@ -29,7 +29,7 @@ class Fee(models.Model):
     paidInst = models.IntegerField()
 
     def __str__(self):
-        return str(self.studentId)
+        return str(self.student)
 
 class Course(models.Model):
     name = models.CharField(max_length=255)
@@ -44,4 +44,4 @@ class Grades(models.Model):
     grade = models.IntegerField(default=10)
 
     def __str__(self):
-        return (str(self.studentId) + ", " + str(self.courseID) + ": " + self.letterGrade)
+        return (str(self.student) + ", " + str(self.course) + ": " + self.grade)
