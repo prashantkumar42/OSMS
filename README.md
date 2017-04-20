@@ -2,7 +2,7 @@
 Developers: Pranshu Gupta, Prashant Kumar
 
 ## Introduction
-As evey thing is going digital, we are actively promoting paperless schools one important aspect is digitalizing the school management along with the teaching process and examinations. There is a lot of paprwork often involved during the admission of students and later for fee and grades management.
+As every thing is going digital, we are actively promoting paperless schools. One important aspect is digitalizing the school management along with the teaching process and examinations. There is a lot of paprwork often involved during the admission of students and then later for fee and grades management.
 
 Our aim is to develop a web based application that allows that school management to maintain all these procedures online. 
 
