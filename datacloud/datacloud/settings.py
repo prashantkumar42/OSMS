@@ -103,7 +103,7 @@ DATABASES = {
         'USER': 'datacloud',
         'PASSWORD': 'kickass123',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '3306',
     }
 }
 
