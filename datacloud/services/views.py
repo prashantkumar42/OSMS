@@ -21,7 +21,7 @@ def api(request):
         batch = models.Batch.objects.get(pk=rbatch)
         kwargs["batch__id"] = rbatch
         kwargs["name__istartswith"] = alpha
-        array = models.Student.objects.filter(**kwargs).order_by('name')[page*1000:(page+1)*1000]
+        array = models.Student.objects.filter(**kwargs).order_by('name')[page*500:(page+1)*500]
         students = []
         for a in array:
             student = {"id":a.pk, "name":a.name, "father":a.father, "mother":a.mother, "gender":a.gender, "contact":a.contact, "batch":batch.name, "bid":batch.id, "address":a.address, "age":a.age}    
