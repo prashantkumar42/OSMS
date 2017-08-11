@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { School } from './schools.component';
 import { Headers, Http } from '@angular/http';
-
-import 'rxjs/add/operator/toPromise';
+ 
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
@@ -11,11 +12,9 @@ export class SchoolsService {
     
     constructor(private http: Http) { }
 
-    getSchools(): Promise<School[]> {
+    getSchools(): Observable<School[]> {
         return this.http.get(this.schoolsUrl)
-             .toPromise()
-             .then(response => response.json().response as School[])
-             .catch(this.handleError);
+             .map(response => response.json().response as School[])
     }
 
     private handleError(error: any): Promise<any> {
