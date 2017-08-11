@@ -23,7 +23,7 @@ export class SchoolsComponent implements OnInit{
     this.schoolsService = schoolsServiceParam;
   }
   getSchools(): void {
-    this.schools = this.schoolsService.getSchools();
+    this.schoolsService.getSchools().then(schools => this.schools = schools);
   }
   ngOnInit(): void {
     this.getSchools();
