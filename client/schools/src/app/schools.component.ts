@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { Observable }        from 'rxjs/Observable';
+ 
+
+
 import {SchoolsService} from './schools.service';
 
 export class School {
@@ -16,14 +20,14 @@ export class School {
 })
 export class SchoolsComponent implements OnInit{
   // properties
-  schools:School[];
+  schools: Observable<School[]>;
   private schoolsService: SchoolsService;
   // methods
-  constructor(schoolsServiceParam: SchoolsService) { 
+  constructor(schoolsServiceParam: SchoolsService) {
     this.schoolsService = schoolsServiceParam;
-  }
+   }
   getSchools(): void {
-    this.schoolsService.getSchools().then(schools => this.schools = schools);
+    this.schools = this.schoolsService.getSchools();
   }
   ngOnInit(): void {
     this.getSchools();
