@@ -1,5 +1,5 @@
 <div>
-    <div *ngFor="let school of schools">
+    <div *ngFor="let school of schools | async">
         <p>{{school.name}}</p>
     </div>
 </div>
